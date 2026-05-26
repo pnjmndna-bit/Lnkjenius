@@ -6,6 +6,24 @@ document.addEventListener('touchmove', function(e){
     e.preventDefault();
 }, { passive:false });
 
+/* FORCE PLAY VIDEO */
+const bannerVideo =
+document.querySelector(".banner-video");
+
+if(bannerVideo){
+
+    bannerVideo.play();
+
+    bannerVideo.addEventListener(
+    "pause",
+    ()=>{
+
+        bannerVideo.play();
+
+    });
+
+}
+
 /* ========================= */
 /* RESET LOADING SAAT BACK */
 /* ========================= */
