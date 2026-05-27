@@ -112,6 +112,75 @@ body{
 }
 
 /* ===================== */
+/* TOMBOL < > */
+/* ===================== */
+
+.banner-btn{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+
+    width:38px;
+    height:38px;
+
+    border:none;
+    border-radius:50%;
+
+    background:rgba(0,0,0,.35);
+    color:#fff;
+
+    font-size:22px;
+    cursor:pointer;
+
+    z-index:20;
+}
+
+.banner-btn.prev{
+    left:10px;
+}
+
+.banner-btn.next{
+    right:10px;
+}
+
+/* ===================== */
+/* INDIKATOR TITIK */
+/* ===================== */
+
+.banner-dots{
+    position:absolute;
+    bottom:12px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    display:flex;
+    gap:7px;
+
+    z-index:20;
+}
+
+.dot{
+    width:9px;
+    height:9px;
+
+    border-radius:50%;
+
+    background:
+    rgba(255,255,255,.4);
+
+    transition:.3s ease;
+}
+
+.dot.active{
+    width:22px;
+
+    border-radius:20px;
+
+    background:#fff;
+}
+
+/* ===================== */
 /* JUDUL BOX */
 /* ===================== */
 
