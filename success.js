@@ -1,8 +1,6 @@
-// success.js
-
-const lanjutBtn =
+const btnLanjut =
 document.getElementById(
-"lanjutBtn"
+"btnLanjut"
 );
 
 const loadingBox =
@@ -18,11 +16,6 @@ document.getElementById(
 const notifBox =
 document.getElementById(
 "notifBox"
-);
-
-const popupOverlay =
-document.getElementById(
-"popupOverlay"
 );
 
 const popup2 =
@@ -114,7 +107,6 @@ notifBox.addEventListener(
         translateX(-50%)
         translateY(${moveY}px)
         `;
-
     }
 
 });
@@ -144,42 +136,21 @@ notifBox.addEventListener(
         translateX(-50%)
         translateY(0)
         `;
-
     }
 
 });
 
 /* ========================= */
-/* POPUP PERTAMA */
+/* TOMBOL LANJUT */
 /* ========================= */
 
-setTimeout(() => {
-
-    popupOverlay.classList.add(
-    "show"
-    );
-
-},6000);
-
-/* ========================= */
-/* LANJUT */
-/* ========================= */
-
-lanjutBtn.addEventListener(
+btnLanjut.addEventListener(
 "click",
 ()=>{
 
-    popupOverlay.classList.remove(
+    popup2.classList.add(
     "show"
     );
-
-    setTimeout(() => {
-
-        popup2.classList.add(
-        "show"
-        );
-
-    },200);
 
 });
 
@@ -194,14 +165,6 @@ btnTidak.addEventListener(
     popup2.classList.remove(
     "show"
     );
-
-    setTimeout(() => {
-
-        popupOverlay.classList.add(
-        "show"
-        );
-
-    },200);
 
 });
 
