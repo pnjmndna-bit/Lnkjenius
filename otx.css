@@ -227,53 +227,60 @@ body{
     cursor:pointer;
 }
 
-.sheet-handle{
-    width:55px;
-    height:5px;
+.close-otp{
+    position:absolute;
+    top:15px;
+    right:15px;
 
-    background:#d9d9d9;
+    width:27px;
+    height:27px;
 
-    border-radius:999px;
+    border:none;
+    border-radius:50%;
 
-    margin:0 auto 18px;
+    background:#fff;
+    color:#333;
+
+    font-size:24px;
+    cursor:pointer;
 }
 
 .otp-card{
     position:fixed;
-    left:0;
-    bottom:0;
 
-    width:100%;
+    top:50%;
+    left:50%;
+
+    width:90%;
+    max-width:420px;
 
     background:#1256a9;
 
-    border-radius:30px 30px 0 0;
+    border-radius:20px;
 
-    padding:24px 18px 35px;
+    padding:30px 20px;
 
-    z-index:999;
-
-    filter:blur(8px);
+    z-index:9999;
 
     transform:
-    translateY(100%)
-    scale(.96);
+    translate(-50%,-50%)
+    scale(.8);
 
     opacity:0;
 
-    transition:
-    transform .45s cubic-bezier(.22,1,.36,1),
-    opacity .35s ease;
+    visibility:hidden;
+
+    transition:.3s ease;
 }
 
 .otp-card.show{
     transform:
-    translateY(0)
+    translate(-50%,-50%)
     scale(1);
 
-    filter:blur(0);
-
     opacity:1;
+
+    visibility:visible;
 }
 
 /* TITLE */
@@ -289,9 +296,14 @@ body{
     font-weight:600;
 }
 
+.verifikasi-title{
+  font-size:15px;
+}
+
+
 /* NUMBER BOX */
 .number-box{
-    width:65%;
+    width:72%;
     height:36px;
 
     margin:0 auto 12px;
@@ -409,6 +421,123 @@ body{
     font-weight:600;
 
     color:#000;
+}
+
+.help-otp{
+    margin-top:15px;
+
+    color:#fff;
+
+    font-size:13px;
+    font-weight:600;
+
+    text-align:center;
+
+    text-decoration:underline;
+
+    cursor:pointer;
+}
+
+.help-popup{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.5);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:99999;
+}
+
+.help-popup.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.help-content{
+    width:90%;
+    max-width:350px;
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    position:relative;
+}
+
+.help-close{
+    position:absolute;
+    top:10px;
+    right:10px;
+
+    background:none;
+    border:none;
+
+    font-size:26px;
+
+    cursor:pointer;
+}
+
+.help-title{
+    font-size:17px;
+    font-weight:700;
+
+    margin-bottom:12px;
+
+    color:#222;
+}
+
+.help-desc{
+    font-size:13px;
+
+    line-height:1.6;
+
+    color:#555;
+
+    margin-bottom:18px;
+}
+
+.help-subtitle{
+    font-size:15px;
+    font-weight:700;
+
+    margin-bottom:10px;
+
+    color:#118EEA;
+}
+
+.tutorial-box{
+    width:100%;
+
+    background:#f8f8f8;
+
+    border:1px solid #e5e5e5;
+
+    border-radius:12px;
+
+    padding:10px;
+
+    margin-top:10px;
+
+    box-shadow:
+    0 4px 12px rgba(0,0,0,.08);
+}
+
+.help-image{
+    width:100%;
+
+    display:block;
+
+    border-radius:8px;
 }
 
 /* SHAKE */
