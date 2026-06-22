@@ -88,76 +88,82 @@ body{
     text-align:center;
 }
 
-/* LOGO WRAP PREMIUM */
+/* LOGO WRAP */
 .logo-wrap{
 
     width:100%;
 
     display:flex;
     justify-content:center;
-    align-items:center;
 
-    margin-top:18px;
-    margin-bottom:42px;
-}
+    margin-top:20px;
+    margin-bottom:45px;
 
-/* LOGO */
-.logo{
-
-    width:135px;
-
-    height:auto;
-
-    display:block;
-
-    padding:12px;
-
-    border-radius:22px;
-
-    background:
-    linear-gradient(
-        135deg,
-        rgba(255,255,255,.18),
-        rgba(255,255,255,.06)
-    );
-
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-
-    border:1px solid
-    rgba(255,255,255,.22);
-
-    box-shadow:
-    0 15px 40px rgba(0,0,0,.18),
-    inset 0 1px 0 rgba(255,255,255,.25);
-
-    animation:logoFloat 4s ease-in-out infinite;
-}
-
-.logo-wrap{
     position:relative;
 }
 
+/* GLOW BELAKANG */
 .logo-wrap::before{
 
     content:"";
 
     position:absolute;
 
-    width:170px;
-    height:170px;
+    width:180px;
+    height:180px;
 
     border-radius:50%;
 
     background:
     radial-gradient(
-        rgba(83,173,255,.35),
+        rgba(255,255,255,.25),
         transparent 70%
     );
 
     filter:blur(25px);
 
-    z-index:-1;
+    z-index:0;
+}
+
+/* LOGO */
+.logo{
+
+    width:140px;
+
+    height:auto;
+
+    display:block;
+
+    position:relative;
+    z-index:2;
+
+    filter:
+    drop-shadow(
+        0 8px 20px
+        rgba(0,0,0,.15)
+    )
+    drop-shadow(
+        0 0 25px
+        rgba(255,255,255,.15)
+    );
+
+    animation:
+    logoFloat 4s ease-in-out infinite;
+}
+
+.logo{
+
+    width:145px;
+
+    filter:
+    drop-shadow(
+        0 10px 30px
+        rgba(255,255,255,.15)
+    )
+    drop-shadow(
+        0 15px 35px
+        rgba(17,142,234,.25)
+    );
 }
 
 /* TITLE PREMIUM */
