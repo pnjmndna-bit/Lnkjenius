@@ -307,33 +307,33 @@ body{
 }
 
 .section-title{
-    margin:18px 0 12px;
-    padding:12px 16px;
+    margin:5px 0;
+    padding:8px 12px;
 
     text-align:center;
-    font-size:16px;
-    font-weight:700;
-    letter-spacing:.5px;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:.4px;
 
-    color:#083d6b;
+    color:#eaf6ff; /* putih kebiruan */
 
-    border-radius:12px;
+    border-radius:10px;
 
     background:
     linear-gradient(
         135deg,
-        rgba(255,255,255,.9),
-        rgba(255,255,255,.6)
+        rgba(7,153,242,.25),
+        rgba(4,119,217,.18)
     );
 
-    backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
 
-    border:1px solid rgba(255,255,255,.7);
+    border:1px solid rgba(255,255,255,.25);
 
     box-shadow:
-    0 8px 20px rgba(0,0,0,.08),
-    inset 0 1px 0 rgba(255,255,255,.9);
+    0 6px 15px rgba(0,0,0,.12),
+    inset 0 1px 0 rgba(255,255,255,.15);
 
     position:relative;
 }
@@ -341,22 +341,18 @@ body{
 .section-title::after{
     content:"";
     position:absolute;
-    left:25%;
-    bottom:6px;
+    left:30%;
+    bottom:5px;
 
-    width:50%;
-    height:2px;
+    width:40%;
+    height:1.5px;
 
     background:linear-gradient(
         90deg,
         transparent,
-        #0799f2,
+        #4fc3ff,
         transparent
     );
-}
-
-.section-title{
-    text-transform:capitalize;
 }
 
 .quick-menu{
