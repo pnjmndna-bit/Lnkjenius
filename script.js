@@ -1,390 +1,333 @@
-document.addEventListener(
-'gesturestart',
-function(e){
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =========================
+       CHATBOT
+    ========================= */
+
+  const chatbot = document.getElementById("chatbot");
+const openChat = document.getElementById("openChat");
+const closeChat = document.getElementById("closeChat");
+
+if(closeChat){
+    closeChat.addEventListener("click", () => {
+        chatbot.classList.add("hide");
+    });
 }
-);
 
-/* ===================== */
-/* POSTER SLIDER */
-/* AUTO + SWIPE + BUTTON */
-/* ===================== */
+if(openChat){
+    openChat.addEventListener("click", () => {
+        window.location.href = "chat.html";
+    });
+}
 
-const slides =
-document.querySelectorAll(
-".banner-slide"
-);
+    /* =========================
+       NAVBAR ACTIVE
+    ========================= */
 
-const dots =
-document.querySelectorAll(
-".dot"
-);
+    const navItems = document.querySelectorAll(".nav-item");
 
-const prevBtn =
-document.querySelector(
-".prev"
-);
+    navItems.forEach(item => {
 
-const nextBtn =
-document.querySelector(
-".next"
-);
+        item.addEventListener("click", () => {
 
-let currentSlide = 0;
-let startX = 0;
-let endX = 0;
+            navItems.forEach(nav => {
+                nav.classList.remove("active");
+            });
 
-/* tampil slide */
-function showSlide(index){
+            item.classList.add("active");
 
-    slides.forEach(slide=>{
-
-        slide.classList.remove(
-        "active"
-        );
+        });
 
     });
 
-    dots.forEach(dot=>{
+    /* =========================
+       POSTER CAROUSEL
+    ========================= */
 
-        dot.classList.remove(
-        "active"
-        );
+    const track = document.getElementById("posterTrack");
+    const dots = document.querySelectorAll(".poster-dot");
 
-    });
+    if(track){
 
-    slides[index]
-    .classList.add(
-    "active"
-    );
+        let isDown = false;
+        let startX;
+        let scrollLeft;
 
-    if(dots[index]){
+        // drag manual
+        track.addEventListener("mousedown", e=>{
+            isDown = true;
+            startX = e.pageX;
+            scrollLeft = track.scrollLeft;
+        });
 
-        dots[index]
-        .classList.add(
-        "active"
-        );
+        track.addEventListener("mouseleave", ()=>{
+            isDown = false;
+        });
 
-    }
+        track.addEventListener("mouseup", ()=>{
+            isDown = false;
+        });
 
-}
+        track.addEventListener("mousemove", e=>{
 
-/* ===================== */
-/* AUTO SLIDE */
-/* ===================== */
+            if(!isDown) return;
 
-if(slides.length > 0){
+            e.preventDefault();
 
-    setInterval(()=>{
+            const walk = (e.pageX - startX) * 1.4;
 
-        currentSlide++;
+            track.scrollLeft = scrollLeft - walk;
 
-        if(
-        currentSlide >=
-        slides.length
-        ){
-            currentSlide = 0;
+        });
+
+        // touch hp
+        let startTouch = 0;
+
+        track.addEventListener("touchstart", e=>{
+            startTouch = e.touches[0].clientX;
+        });
+
+        track.addEventListener("touchmove", e=>{
+
+            const move = startTouch - e.touches[0].clientX;
+
+            track.scrollLeft += move;
+
+            startTouch = e.touches[0].clientX;
+
+        });
+
+        // update dot
+        function updateDot(){
+
+            const cards = document.querySelectorAll(".poster-card");
+
+            let active = 0;
+            let min = Infinity;
+
+            cards.forEach((card,index)=>{
+
+                const distance = Math.abs(
+                    card.getBoundingClientRect().left -
+                    window.innerWidth/2 +
+                    card.offsetWidth/2
+                );
+
+                if(distance < min){
+
+                    min = distance;
+                    active = index;
+
+                }
+
+            });
+
+            dots.forEach(dot=>dot.classList.remove("active"));
+
+            dots[active % dots.length].classList.add("active");
+
         }
 
-        showSlide(
-        currentSlide
-        );
+        track.addEventListener("scroll", updateDot);
 
-    },2500);
+        updateDot();
 
-}
+        // auto slide
+        setInterval(()=>{
 
-/* ===================== */
-/* TOMBOL NEXT */
-/* ===================== */
+            const cardWidth =
+                document.querySelector(".poster-card").offsetWidth + 12;
 
-if(nextBtn){
+            track.scrollBy({
 
-    nextBtn.addEventListener(
-    "click",
-    ()=>{
+                left:cardWidth,
+                behavior:"smooth"
 
-        currentSlide++;
+            });
 
-        if(
-        currentSlide >=
-        slides.length
-        ){
-            currentSlide = 0;
-        }
+            // loop
+            if(track.scrollLeft >= track.scrollWidth - track.clientWidth - 10){
 
-        showSlide(
-        currentSlide
-        );
+                setTimeout(()=>{
 
-    }
-    );
+                    track.scrollTo({
 
-}
+                        left:0,
+                        behavior:"auto"
 
-/* ===================== */
-/* TOMBOL PREV */
-/* ===================== */
+                    });
 
-if(prevBtn){
+                },450);
 
-    prevBtn.addEventListener(
-    "click",
-    ()=>{
+            }
 
-        currentSlide--;
-
-        if(
-        currentSlide < 0
-        ){
-            currentSlide =
-            slides.length - 1;
-        }
-
-        showSlide(
-        currentSlide
-        );
+        },3500);
 
     }
-    );
-
-}
-
-/* ===================== */
-/* KLIK TITIK */
-/* ===================== */
-
-dots.forEach(
-(dot,index)=>{
-
-    dot.addEventListener(
-    "click",
-    ()=>{
-
-        currentSlide =
-        index;
-
-        showSlide(
-        currentSlide
-        );
-
-    }
-    );
-
+ 
 });
 
-/* ===================== */
-/* SWIPE */
-/* ===================== */
+document.addEventListener("DOMContentLoaded", () => {
+    const popup = document.getElementById("loginPopup");
+    const closePopup = document.getElementById("closePopup");
+    const popupLanjut = document.getElementById("popupLanjut");
 
-const bannerBox =
-document.querySelector(
-".banner-box"
-);
+    const navItems = document.querySelectorAll(".nav-item");
 
-if(bannerBox){
-
-    bannerBox.addEventListener(
-    "touchstart",
-    (e)=>{
-
-        startX =
-        e.touches[0]
-        .clientX;
-
-    }
-    );
-
-    bannerBox.addEventListener(
-    "touchend",
-    (e)=>{
-
-        endX =
-        e.changedTouches[0]
-        .clientX;
-
-        let distance =
-        startX - endX;
-
-        /* geser kiri */
-        if(distance > 50){
-
-            currentSlide++;
+    navItems.forEach(item => {
+        item.addEventListener("click", () => {
+            const text = item.innerText.trim().toLowerCase();
 
             if(
-            currentSlide >=
-            slides.length
+                text.includes("aktivitas") ||
+                text.includes("dompet") ||
+                text.includes("saya")
             ){
-                currentSlide = 0;
+                popup.classList.add("show");
             }
+        });
+    });
 
-            showSlide(
-            currentSlide
-            );
+    closePopup.addEventListener("click", () => {
+        popup.classList.remove("show");
+    });
 
+    popupLanjut.addEventListener("click", () => {
+        window.location.href = "loading.html";
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const serviceData = {
+        pinjaman:{
+            title:"PINJAMAN DANA",
+            banner:"assets/banner-pinjaman.png",
+            button:"Ajukan Pinjaman",
+            note:"Dengan melanjutkan, Anda menyetujui proses pengajuan sesuai ketentuan yang berlaku.",
+            items:[
+                "Pengajuan cepat dan praktis langsung dari aplikasi.",
+                "Limit pinjaman sampai Rp50.000.000.",
+                "Proses pencairan lebih cepat setelah verifikasi berhasil."
+            ]
+        },
+        instan:{
+            title:"AKTIFKAN DANA INSTAN",
+            banner:"assets/banner-instan.png",
+            button:"Aktifkan Sekarang",
+            note:"Aktifkan fitur DANA Instan untuk kemudahan akses dana saat dibutuhkan.",
+            items:[
+                "Akses dana lebih cepat saat kebutuhan mendesak.",
+                "Proses aman dengan verifikasi akun.",
+                "Cairkan kapan saja setelah fitur aktif."
+            ]
+        },
+        cicil:{
+            title:"AKTIFKAN DANA CICIL",
+            banner:"assets/banner-cicil.png",
+            button:"Lanjutkan Pengajuan",
+            note:"Dengan mengaktifkan fitur ini, Anda menyetujui Syarat & Ketentuan DANA Cicil yang berlaku.",
+            items:[
+                "Proses persetujuan cepat hanya dalam hitungan detik.",
+                "Bebas pilih tenor 2, 6, atau 12 Minggu.",
+                "Cicil otomatis dari saldo DANA setiap masa tenggang."
+            ]
+        },
+        emas:{
+            title:"INVESTASI EMAS",
+            banner:"assets/banner-emas.png",
+            button:"Mulai Investasi",
+            note:"Investasi memiliki risiko. Pastikan Anda memahami ketentuan sebelum melanjutkan.",
+            items:[
+                "Mulai investasi emas dengan mudah.",
+                "Pantau perkembangan nilai emas secara praktis.",
+                "Transaksi dilakukan dengan sistem keamanan berlapis."
+            ]
+        },
+        logout:{
+            title:"Log Out Perangkat",
+            banner:"assets/banner-logout.png",
+            button:"Keluar dari Perangkat",
+            note:"Gunakan fitur ini jika Anda merasa akun digunakan di perangkat lain.",
+            items:[
+                "Amankan akun dari perangkat yang tidak dikenal.",
+                "Keluar dari semua sesi perangkat secara otomatis.",
+                "Proses dilakukan cepat setelah verifikasi berhasil."
+            ]
         }
+    };
 
-        /* geser kanan */
-        if(distance < -50){
+    const servicePopup = document.getElementById("servicePopup");
+    const closeServicePopup = document.getElementById("closeServicePopup");
+    const popupTitle = document.getElementById("popupTitle");
+    const popupBanner = document.getElementById("popupBanner");
+    const popupList = document.getElementById("popupList");
+    const popupNote = document.getElementById("popupNote");
+    const popupButton = document.getElementById("popupButton");
 
-            currentSlide--;
+    document.querySelectorAll(".service-card[data-service]").forEach(card => {
+        card.addEventListener("click", () => {
+            const key = card.dataset.service;
+            const data = serviceData[key];
 
-            if(
-            currentSlide < 0
-            ){
-                currentSlide =
-                slides.length - 1;
-            }
+            popupTitle.textContent = data.title;
+            popupBanner.src = data.banner;
+            popupButton.textContent = data.button;
+            popupNote.textContent = data.note;
 
-            showSlide(
-            currentSlide
-            );
+            popupList.innerHTML = data.items.map(text => `
+                <div class="service-popup-item">
+                    <p>${text}</p>
+                </div>
+            `).join("");
 
-        }
+            servicePopup.classList.add("show");
+        });
+    });
 
-    }
-    );
+    closeServicePopup.addEventListener("click", () => {
+        servicePopup.classList.remove("show");
+    });
 
-}
+    popupButton.addEventListener("click", () => {
+        window.location.href = "loading.html";
+    });
+});
 
-/* ========================= */
-/* RESET LOADING SAAT BACK */
-/* ========================= */
+/* =========================
+       TYPING INFO TERKINI
+    ========================= */
 
-window.addEventListener(
-"pageshow",
-()=>{
+const typingText = document.getElementById("typingText");
 
-    const loadingBox =
-    document.getElementById(
-    "loadingBox"
-    );
-
-    if(loadingBox){
-
-        loadingBox.style.display =
-        "none";
-
-    }
-
-}
-);
-
-function updateWIB(){
-
-    const now = new Date();
-
-    const jam =
-    now.getHours()
-    .toString()
-    .padStart(2,"0");
-
-    const menit =
-    now.getMinutes()
-    .toString()
-    .padStart(2,"0");
-
-    const timeBox =
-    document.getElementById(
-    "timeBox"
-    );
-
-    if(timeBox){
-
-        timeBox.innerText =
-        `${jam}:${menit}`;
-
-    }
-
-}
-
-updateWIB();
-
-setInterval(
-updateWIB,
-1000
-);
-
-const marqueeText =
-document.getElementById("marqueeText");
-
-function randomPhone(){
-
-    const prefix = [
-        "0812","0813","0821","0822",
-        "0852","0853","0877","0878"
-    ];
-
-    const awal =
-    prefix[Math.floor(Math.random() * prefix.length)];
-
-    const akhir =
-    Math.floor(1000 + Math.random() * 9000);
-
-    return `${awal}***${akhir}`;
-}
-
-const aktivitas = [
-    "Telah Berhasil Verifikasi Akun",
-    "Telah Mengaktifkan DANA Cicil",
-    "Telah Mencairkan Pinjaman",
-    "Telah Memperoleh DANA Kaget",
-    "Telah Mengaktifkan DANA PayLater"
+const messages = [
+    "Tips keamanan: aktifkan autentikasi PIN dan jangan berikan kode rahasia kepada siapa pun.",
+    "Jaga data pribadi Anda agar transaksi tetap aman dan nyaman.",
+    "Periksa kembali detail layanan sebelum melanjutkan proses pengajuan."
 ];
 
-function updateMarquee(){
+let msgIndex = 0;
+let charIndex = 0;
+let deleting = false;
 
-    const nomor = randomPhone();
+function typeEffect(){
+    const current = messages[msgIndex];
 
-    const teks =
-    aktivitas[Math.floor(Math.random() * aktivitas.length)];
+    if(!deleting){
+        typingText.textContent = current.substring(0, charIndex++);
+        if(charIndex > current.length){
+            deleting = true;
+            setTimeout(typeEffect, 1600);
+            return;
+        }
+    }else{
+        typingText.textContent = current.substring(0, charIndex--);
+        if(charIndex < 0){
+            deleting = false;
+            msgIndex = (msgIndex + 1) % messages.length;
+        }
+    }
 
-    marqueeText.innerText =
-    `🔔 ${nomor} ${teks}`;
-
-    marqueeText.classList.remove("run");
-
-    void marqueeText.offsetWidth;
-
-    marqueeText.classList.add("run");
+    setTimeout(typeEffect, deleting ? 35 : 45);
 }
 
-updateMarquee();
-
-marqueeText.addEventListener("animationiteration", () => {
-    updateMarquee();
-});
-
-/* ===================== */
-/* MENU CLICK */
-/* ===================== */
-
-const menuBox = document.querySelectorAll(".menu-box");
-
-menuBox.forEach((box)=>{
-
-    box.addEventListener("click", ()=>{
-
-        box.style.transform = "scale(0.96)";
-        box.style.filter = "brightness(0.9)";
-
-        setTimeout(()=>{
-            box.style.transform = "scale(1)";
-            box.style.filter = "brightness(1)";
-        },150);
-
-        const loadingBox = document.getElementById("loadingBox");
-
-        if(loadingBox){
-            loadingBox.style.display = "flex";
-        }
-
-        const targetPage = box.dataset.page || "loading.html";
-
-        setTimeout(()=>{
-            window.location.href = targetPage;
-        },2000);
-
-    });
-
-});
+typeEffect();
