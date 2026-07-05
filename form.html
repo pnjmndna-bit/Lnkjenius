@@ -111,18 +111,27 @@ href="form.css">
 
 </div>
 
-  <div class="loan-popup" id="loanPopup">
+<div class="loan-popup" id="loanPopup">
+
     <div class="loan-card">
 
-        <div class="loan-title">Limit Tersedia</div>
+        <div class="loan-title">
+            Limit Tersedia
+        </div>
 
         <div class="loan-limit">
-            <strong id="limitUtama">Rp10.000.000</strong>
+
+            <strong id="limitUtama">
+                Rp10.000.000
+            </strong>
 
             <span>
                 dari<br>
-                <b id="limitTotal">Rp10.000.000</b>
+                <b id="limitTotal">
+                    Rp10.000.000
+                </b>
             </span>
+
         </div>
 
         <div class="loan-used">
@@ -130,28 +139,50 @@ href="form.css">
         </div>
 
         <div class="loan-progress">
-            <div class="loan-fill"></div>
-            <div class="loan-dot"></div>
+
+            <input
+                type="range"
+                id="loanRange"
+                class="loan-range"
+                min="500000"
+                max="10000000"
+                step="500000"
+                value="500000">
+
         </div>
 
         <div class="loan-withdraw">
-            <div class="loan-icon">Rp</div>
+
+            <div class="loan-icon">
+                Rp
+            </div>
 
             <div class="loan-label">
                 Jumlah<br>
                 Penarikan
             </div>
 
-            <div class="loan-amount">
+            <div
+                class="loan-amount"
+                id="loanAmount">
+
                 Rp500.000
+
             </div>
+
         </div>
 
-        <button class="loan-btn" id="cairkanBtn">
+        <button
+            type="button"
+            class="loan-btn"
+            id="cairkanBtn">
+
             CAIRKAN SEKARANG
+
         </button>
 
     </div>
+
 </div>
 
 <!-- LOADING -->
