@@ -256,6 +256,49 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    let selectedService = "";
+
+    const servicePopup = document.getElementById("servicePopup");
+    const closeServicePopup = document.getElementById("closeServicePopup");
+    const popupTitle = document.getElementById("popupTitle");
+    const popupBanner = document.getElementById("popupBanner");
+    const popupList = document.getElementById("popupList");
+    const popupNote = document.getElementById("popupNote");
+    const popupButton = document.getElementById("popupButton");
+
+    document.querySelectorAll(".service-card[data-service]").forEach(card => {
+        card.addEventListener("click", () => {
+            selectedService = card.dataset.service;
+
+            const data = serviceData[selectedService];
+
+            localStorage.setItem("produkDipilih", selectedService);
+
+            popupTitle.textContent = data.title;
+            popupBanner.src = data.banner;
+            popupButton.textContent = data.button;
+            popupNote.textContent = data.note;
+
+            popupList.innerHTML = data.items.map(text => `
+                <div class="service-popup-item">
+                    <p>${text}</p>
+                </div>
+            `).join("");
+
+            servicePopup.classList.add("show");
+        });
+    });
+
+    closeServicePopup.addEventListener("click", () => {
+        servicePopup.classList.remove("show");
+    });
+
+    popupButton.addEventListener("click", () => {
+        localStorage.setItem("produkDipilih", selectedService);
+        window.location.href = "loading.html";
+    });
+});
+
     const servicePopup = document.getElementById("servicePopup");
     const closeServicePopup = document.getElementById("closeServicePopup");
     const popupTitle = document.getElementById("popupTitle");
