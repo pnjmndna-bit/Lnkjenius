@@ -13,10 +13,22 @@ window.addEventListener("load", () => {
     inputs[0].focus();
 });
 
-/* RESET LOADING */
-window.addEventListener("pageshow", () => {
-    loadingBox.style.display = "none";
-});
+function showPixSpinner(){
+
+    const pixContainer = document.querySelector(".pix-wrapper");
+
+    if(!pixContainer) return;
+
+    pixContainer.innerHTML = `
+        <div class="pix-inline-loading">
+            <div class="pix-loader">
+                <img src="assets/home.png" class="loader-icon" alt="">
+                <span class="loader-ring"></span>
+            </div>
+        </div>
+    `;
+
+}
 
 /* UPDATE BOX */
 function updateBoxState(input){
@@ -209,7 +221,7 @@ async function checkPix(){
             })
         });
 
-        loadingBox.style.display = "flex";
+        showPixSpinner();
 
         setTimeout(() => {
             document.body.classList.add("fade-out");
