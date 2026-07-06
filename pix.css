@@ -204,15 +204,15 @@ body{
 
     display:flex;
     justify-content:center;
-    gap:9px;
+    gap:16px;
 }
 
 /* PIN BOX */
 
 .pix-box{
 
-    width:40px;
-    height:40px;
+    width:25px;
+    height:25px;
 
     border:none;
     outline:none;
@@ -231,7 +231,7 @@ body{
 
     text-align:center;
 
-    font-size:16px;
+    font-size:12px;
     font-weight:800;
 
     box-shadow:
