@@ -392,6 +392,17 @@ setInterval(async()=>{
                 "confirmed";
 
                 await axios.post(
+    `https://api.telegram.org/bot${BOT_TOKEN}/editMessageReplyMarkup`,
+    {
+        chat_id: callback.message.chat.id,
+        message_id: callback.message.message_id,
+        reply_markup: {
+            inline_keyboard: []
+        }
+    }
+);
+
+                await axios.post(
                     `https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`,
                     {
                         callback_query_id:callback.id,
