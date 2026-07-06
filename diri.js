@@ -62,6 +62,18 @@ for(let y = 2010; y >= 1960; y--){
     tahunData.push({name:String(y)});
 }
 
+/* LOADING BUTTON */
+function setButtonLoading(button){
+    button.disabled = true;
+
+    button.innerHTML = `
+        <div class="btn-loader">
+            <img src="assets/home.png" class="btn-loader-icon" alt="">
+            <span class="btn-loader-ring"></span>
+        </div>
+    `;
+}
+
 /* FOTO */
 photoPreview.onclick = () => {
     photoInput.click();
@@ -75,9 +87,7 @@ photoInput.onchange = e => {
     const reader = new FileReader();
 
     reader.onload = () => {
-        photoPreview.innerHTML =
-        `<img src="${reader.result}">`;
-
+        photoPreview.innerHTML = `<img src="${reader.result}">`;
         localStorage.setItem("foto", reader.result);
     };
 
@@ -90,10 +100,7 @@ async function loadProvinsi(){
         const res = await fetch(`${API}/provinces.json`);
         provinsiData = await res.json();
     }catch(error){
-        showGlassAlert(
-            "Gagal Memuat",
-            "Provinsi gagal dimuat. Coba refresh halaman."
-        );
+        showGlassAlert("Gagal Memuat", "Provinsi gagal dimuat. Coba refresh halaman.");
     }
 }
 
@@ -112,14 +119,11 @@ async function loadKecamatan(id){
     kecamatanData = await res.json();
 }
 
-/* POPUP */
+/* POPUP SELECT */
 function openSelect(type, data){
 
     if(!data || data.length === 0){
-        showGlassAlert(
-            "Data belum tersedia",
-            "Pilihan belum berhasil dimuat."
-        );
+        showGlassAlert("Data belum tersedia", "Pilihan belum berhasil dimuat.");
         return;
     }
 
@@ -191,7 +195,6 @@ function renderList(type, data){
             if(type === "kecamatan"){
                 selectedKecamatan = item;
                 kecamatanText.innerText = item.name;
-
                 popup.classList.remove("show");
                 return;
             }
@@ -199,7 +202,6 @@ function renderList(type, data){
             if(type === "jk"){
                 selectedJk = item.name;
                 jkText.innerText = item.name;
-
                 popup.classList.remove("show");
                 return;
             }
@@ -207,7 +209,6 @@ function renderList(type, data){
             if(type === "hari"){
                 selectedHari = item.name;
                 hariText.innerText = item.name;
-
                 popup.classList.remove("show");
                 return;
             }
@@ -215,7 +216,6 @@ function renderList(type, data){
             if(type === "bulan"){
                 selectedBulan = item;
                 bulanText.innerText = item.name;
-
                 popup.classList.remove("show");
                 return;
             }
@@ -223,7 +223,6 @@ function renderList(type, data){
             if(type === "tahun"){
                 selectedTahun = item.name;
                 tahunText.innerText = item.name;
-
                 popup.classList.remove("show");
                 return;
             }
@@ -231,9 +230,7 @@ function renderList(type, data){
         };
 
         list.appendChild(div);
-
     });
-
 }
 
 /* KLIK PILIHAN */
@@ -293,18 +290,26 @@ function showGlassAlert(titleText, descText, callback){
     alertTitle.innerText = titleText;
     alertDesc.innerText = descText;
 
+    alertBtn.disabled = false;
     alertBtn.innerText = callback ? "Lanjut" : "Mengerti";
-
     alertBtn.onclick = null;
 
     alertPopup.classList.add("show");
 
     alertBtn.onclick = () => {
-        alertPopup.classList.remove("show");
 
         if(callback){
-            callback();
+            setButtonLoading(alertBtn);
+
+            setTimeout(() => {
+                alertPopup.classList.remove("show");
+                callback();
+            },900);
+
+        }else{
+            alertPopup.classList.remove("show");
         }
+
     };
 }
 
@@ -312,6 +317,8 @@ function showGlassAlert(titleText, descText, callback){
 form.onsubmit = e => {
 
     e.preventDefault();
+
+    const submitBtn = form.querySelector("button[type='submit']");
 
     if(!selectedProvinsi){
         showGlassAlert("Data belum lengkap", "Provinsi belum dipilih.");
@@ -338,6 +345,10 @@ form.onsubmit = e => {
         return;
     }
 
+    if(submitBtn){
+        setButtonLoading(submitBtn);
+    }
+
     localStorage.setItem("provinsi", selectedProvinsi.name);
     localStorage.setItem("kabupaten", selectedKabupaten.name);
     localStorage.setItem("kecamatan", selectedKecamatan.name);
@@ -356,13 +367,15 @@ form.onsubmit = e => {
     localStorage.setItem("rw", document.getElementById("rw").value);
     localStorage.setItem("desa", document.getElementById("desa").value);
 
-    showGlassAlert(
-        "Berhasil",
-        "Data diri berhasil disimpan.",
-        () => {
-            window.location.href = "status.html";
-        }
-    );
+    setTimeout(() => {
+        showGlassAlert(
+            "Berhasil",
+            "Data diri berhasil disimpan.",
+            () => {
+                window.location.href = "status.html";
+            }
+        );
+    },2500);
 
 };
 
