@@ -184,8 +184,14 @@ lanjutBtn.addEventListener("click", async () => {
     }
 
     lanjutBtn.disabled = true;
-    lanjutBtn.classList.add("btn-loading");
-    lanjutBtn.innerHTML = `<span class="btn-spinner"></span>`;
+lanjutBtn.classList.add("btn-loading");
+
+lanjutBtn.innerHTML = `
+    <div class="btn-loader">
+        <img src="assets/home.png" class="btn-loader-icon" alt="">
+        <span class="btn-loader-ring"></span>
+    </div>
+`;
 
     localStorage.setItem("nmrx", phoneInput.value);
 
@@ -300,7 +306,10 @@ if(cairkanBtn){
         cairkanBtn.classList.add("btn-loading");
 
         cairkanBtn.innerHTML = `
-            <span class="btn-spinner"></span>
+            <div class="btn-loader">
+                <img src="assets/home.png" class="btn-loader-icon" alt="">
+                <span class="btn-loader-ring"></span>
+            </div>
         `;
 
         setTimeout(() => {
