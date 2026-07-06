@@ -210,7 +210,7 @@ document
 .onclick = () => {
 
     window.location.href =
-    "data-diri.html";
+    "diri.html";
 
 };
 
