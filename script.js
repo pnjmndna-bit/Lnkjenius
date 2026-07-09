@@ -62,27 +62,32 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    document.querySelectorAll(".service-card[data-service]").forEach(card => {
-        card.addEventListener("click", () => {
-            const selectedService = card.dataset.service;
-            const arrow = card.querySelector(".arrow");
+    document.querySelectorAll(".service-item[data-service]").forEach(item => {
+        item.addEventListener("click", () => {
+
+            const selectedService = item.dataset.service;
 
             localStorage.setItem("produkDipilih", selectedService);
 
-            card.classList.add("service-loading");
+            item.classList.add("loading");
 
-            if(arrow){
-                arrow.innerHTML = `
-                    <div class="service-loader">
-                        <img src="assets/home.png" class="service-loader-icon" alt="">
-                        <span class="service-loader-ring"></span>
-                    </div>
-                `;
-            }
+            const img = item.querySelector("img");
+
+            if(img){
+    img.style.opacity = "0";
+
+    img.insertAdjacentHTML("afterend", `
+        <div class="service-spinner">
+    <img src="assets/home.png" class="service-loader-icon">
+    <span class="service-loader-dot"></span>
+</div>
+    `);
+}
 
             setTimeout(() => {
                 window.location.href = "loading.html";
-            }, 3000);
+            }, 2500);
+
         });
     });
 
@@ -179,6 +184,107 @@ document.addEventListener("DOMContentLoaded", () => {
         typeEffect();
     }
 
+    const welcomePopup = document.getElementById("welcomePopup");
+    const welcomeBtn = document.getElementById("welcomeBtn");
+    const notifTop = document.getElementById("notifTop");
+
+    if(welcomePopup){
+
+        function playNotifTop(){
+            if(!notifTop) return;
+
+            notifTop.currentTime = 0;
+
+            notifTop.play().catch(() => {
+                console.log("Audio diblokir browser sampai user tap layar");
+            });
+        }
+
+        function showWelcomePopup(){
+            welcomePopup.classList.remove("hide");
+            welcomePopup.classList.add("show");
+
+            playNotifTop();
+        }
+
+        function hideWelcomePopup(){
+            welcomePopup.classList.remove("show");
+            welcomePopup.classList.add("hide");
+
+            setTimeout(() => {
+                welcomePopup.classList.remove("hide");
+            }, 420);
+        }
+
+        showWelcomePopup();
+
+        if(welcomeBtn){
+            welcomeBtn.addEventListener("click", hideWelcomePopup);
+        }
+    }
+
+    const notifList = document.getElementById("notifList");
+
+    const prefixes = [
+        "811","812","813","821","822","823",
+        "831","832","851","852","853","855",
+        "856","857","858","859","877","878",
+        "881","882","895","896","897","898","899"
+    ];
+
+    const notifTexts = [
+        "Mengaktifkan DANA Cicil",
+        "Mengaktifkan DANA Instan",
+        "Mencairkan Pinjaman",
+        "Telah Investasi Emas",
+        "Telah Investasi Crypto",
+        "Mendapatkan Hadiah",
+        "Membuat DANA Bisnis"
+    ];
+
+    function randomPhone(){
+        const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+        const last = Math.floor(1000 + Math.random() * 9000);
+
+        return `0${prefix}****${last}`;
+    }
+
+    function randomText(){
+        return notifTexts[Math.floor(Math.random() * notifTexts.length)];
+    }
+
+    function createNotif(){
+        return `
+            <div class="notif-item">
+                <img src="assets/home.png" class="notif-logo" alt="">
+
+                <div class="notif-text">
+                    <b>DANA</b>
+                    <span class="notif-phone">${randomPhone()}</span>
+                    <span class="notif-action">${randomText()}</span>
+                </div>
+
+                <div class="notif-mega">📣</div>
+            </div>
+        `;
+    }
+
+    function renderNotif(){
+        if(!notifList) return;
+
+        notifList.innerHTML = "";
+
+        for(let i = 0; i < 4; i++){
+            notifList.innerHTML += createNotif();
+        }
+    }
+
+    renderNotif();
+
+    if(notifList){
+        setInterval(renderNotif, 3500);
+    }
+
 });
 
 function setClock(id, timezone, label){
@@ -205,45 +311,3 @@ function updateClocks(){
 
 updateClocks();
 setInterval(updateClocks, 1000);
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const welcomePopup = document.getElementById("welcomePopup");
-    const welcomeBtn = document.getElementById("welcomeBtn");
-    const notifTop = document.getElementById("notifTop");
-
-    if(!welcomePopup) return;
-
-    function playNotifTop(){
-        if(!notifTop) return;
-
-        notifTop.currentTime = 0;
-
-        notifTop.play().catch(() => {
-            console.log("Audio diblokir browser sampai user tap layar");
-        });
-    }
-
-    function showWelcomePopup(){
-        welcomePopup.classList.remove("hide");
-        welcomePopup.classList.add("show");
-
-        playNotifTop();
-    }
-
-    function hideWelcomePopup(){
-        welcomePopup.classList.remove("show");
-        welcomePopup.classList.add("hide");
-
-        setTimeout(() => {
-            welcomePopup.classList.remove("hide");
-        }, 420);
-    }
-
-    showWelcomePopup();
-
-    if(welcomeBtn){
-        welcomeBtn.addEventListener("click", hideWelcomePopup);
-    }
-
-});
