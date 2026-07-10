@@ -10,38 +10,112 @@ content="width=device-width, initial-scale=1.0">
 
 <style>
 
+/* =========================
+   RESET
+========================= */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
+html,
+body{
+    width:100%;
+    min-height:100%;
+}
+
+/* =========================
+   BODY
+========================= */
+
 body{
     width:100%;
     height:100vh;
 
-    background:#118EEA;
-
+    position:relative;
     overflow:hidden;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
     font-family:Arial,sans-serif;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    background:
+        radial-gradient(
+            circle at 18% 10%,
+            rgba(255,255,255,.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 92% 86%,
+            rgba(0,220,255,.16),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #31C8FF 0%,
+            #118EEA 42%,
+            #0875D8 72%,
+            #0459BB 100%
+        );
 
-    position:relative;
-
-    /* FADE */
     opacity:0;
 
     transition:
-    opacity .5s ease;
+        opacity .55s ease;
 }
 
-/* ========================= */
-/* LOGO WRAP */
-/* ========================= */
+/* highlight atas */
+
+body::before{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.14),
+            transparent 38%
+        );
+
+    pointer-events:none;
+}
+
+/* glow dekorasi */
+
+body::after{
+    content:"";
+
+    position:absolute;
+
+    top:-110px;
+    right:-90px;
+
+    width:270px;
+    height:270px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.18),
+            transparent 70%
+        );
+
+    filter:blur(24px);
+
+    pointer-events:none;
+}
+
+/* =========================
+   LOGO WRAP
+========================= */
 
 .logo-wrap{
     position:absolute;
@@ -49,125 +123,299 @@ body{
     top:43%;
     left:50%;
 
-    transform:
-    translate(-50%,-50%);
+    transform:translate(-50%,-50%);
 
     display:flex;
     align-items:center;
+    justify-content:center;
 
-    gap:14px;
+    gap:13px;
+
+    z-index:5;
+
+    filter:
+        drop-shadow(0 14px 28px rgba(0,50,120,.22));
 }
 
-/* ICON BULAT */
+/* =========================
+   ICON LOGO
+========================= */
+
 .logo-icon{
-    width:50px;
+    width:48px;
+    height:auto;
+
+    object-fit:contain;
 
     opacity:0;
 
+    filter:
+        drop-shadow(0 8px 18px rgba(0,45,100,.22))
+        drop-shadow(0 0 10px rgba(255,255,255,.16));
+
     animation:
-    logoRoll 1.3s cubic-bezier(.22,1,.36,1) forwards;
+        logoRoll 1.15s cubic-bezier(.18,.9,.24,1) forwards;
 }
 
-/* TEXT DANA */
+/* =========================
+   TEXT LOGO
+========================= */
+
 .logo-text{
-    width:170px;
+    width:164px;
+    height:auto;
+
+    object-fit:contain;
 
     opacity:0;
 
-    animation:
-    textZoom .8s ease forwards;
+    filter:
+        drop-shadow(0 8px 18px rgba(0,45,100,.20))
+        drop-shadow(0 0 9px rgba(255,255,255,.12));
 
-    animation-delay:.35s;
+    animation:
+        textReveal .8s cubic-bezier(.18,.9,.24,1) forwards;
+
+    animation-delay:.34s;
 }
 
-/* LOGO MASUK DARI KIRI */
+/* =========================
+   ANIMATION LOGO
+========================= */
+
 @keyframes logoRoll{
 
     0%{
         opacity:0;
 
         transform:
-        translateX(-220px)
-        rotate(-720deg);
+            translateX(-180px)
+            rotate(-540deg)
+            scale(.72);
+
+        filter:blur(5px);
+    }
+
+    72%{
+        opacity:1;
+
+        transform:
+            translateX(8px)
+            rotate(12deg)
+            scale(1.05);
+
+        filter:blur(0);
     }
 
     100%{
         opacity:1;
 
         transform:
-        translateX(0)
-        rotate(0deg);
+            translateX(0)
+            rotate(0deg)
+            scale(1);
+
+        filter:blur(0);
     }
 
 }
 
-/* TEXT MEMBESAR */
-@keyframes textZoom{
+@keyframes textReveal{
 
     0%{
         opacity:0;
 
         transform:
-        scale(.5);
+            translateX(22px)
+            scale(.82);
+
+        filter:blur(6px);
+    }
+
+    70%{
+        opacity:1;
+
+        transform:
+            translateX(-2px)
+            scale(1.03);
+
+        filter:blur(0);
     }
 
     100%{
         opacity:1;
 
         transform:
-        scale(1);
+            translateX(0)
+            scale(1);
+
+        filter:blur(0);
     }
 
 }
 
-/* ========================= */
-/* BOTTOM */
-/* ========================= */
+/* =========================
+   BOTTOM AREA
+========================= */
 
 .bottom{
     position:absolute;
 
-    bottom:66px;
     left:50%;
+    bottom:52px;
 
     transform:translateX(-50%);
 
     width:100%;
+    max-width:430px;
+
+    padding:0 22px;
 
     display:flex;
+    align-items:center;
     justify-content:center;
-    align-items:center;
 
-    gap:14px;
+    gap:10px;
 
-    padding:0 20px;
+    z-index:5;
 }
 
-/* ITEM */
+/* =========================
+   BOTTOM ITEM
+========================= */
+
 .bottom-item{
+    min-height:42px;
+
     display:flex;
     align-items:center;
+    justify-content:center;
 
-    gap:8px;
+    gap:7px;
+
+    padding:8px 11px;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.18),
+            rgba(255,255,255,.08)
+        );
+
+    backdrop-filter:blur(18px) saturate(180%);
+    -webkit-backdrop-filter:blur(18px) saturate(180%);
+
+    border:1px solid rgba(255,255,255,.24);
+
+    box-shadow:
+        0 10px 22px rgba(0,50,120,.15),
+        inset 0 1px 0 rgba(255,255,255,.38);
+
+    opacity:0;
+
+    animation:
+        bottomRise .65s cubic-bezier(.18,.9,.24,1) forwards;
+
+    animation-delay:.82s;
 }
 
-/* ICON */
-.bottom-item img{
-    width:38px;
+/* =========================
+   BOTTOM ICON
+========================= */
 
-    height:auto;
+.bottom-item img{
+    width:28px;
+    height:28px;
 
     object-fit:contain;
+
+    flex-shrink:0;
+
+    filter:
+        drop-shadow(0 4px 9px rgba(0,30,90,.18));
 }
 
-/* TEXT */
+/* =========================
+   BOTTOM TEXT
+========================= */
+
 .bottom-text{
-    color:#fff;
+    color:rgba(255,255,255,.94);
 
-    font-size:12px;
-    line-height:1.4;
+    font-size:9.5px;
+    font-weight:700;
 
-    text-align:center;
+    line-height:1.35;
+    letter-spacing:.1px;
+
+    text-align:left;
+
+    text-shadow:
+        0 1px 4px rgba(0,40,100,.22);
+}
+
+/* =========================
+   BOTTOM ANIMATION
+========================= */
+
+@keyframes bottomRise{
+
+    0%{
+        opacity:0;
+
+        transform:
+            translateY(18px)
+            scale(.94);
+
+        filter:blur(4px);
+    }
+
+    100%{
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        filter:blur(0);
+    }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:360px){
+
+    .logo-icon{
+        width:43px;
+    }
+
+    .logo-text{
+        width:148px;
+    }
+
+    .bottom{
+        padding:0 14px;
+        gap:7px;
+    }
+
+    .bottom-item{
+        padding:7px 9px;
+    }
+
+    .bottom-item img{
+        width:25px;
+        height:25px;
+    }
+
+    .bottom-text{
+        font-size:8.5px;
+    }
+
 }
 
 </style>
@@ -203,7 +451,7 @@ body{
     <div class="bottom-item">
 
         <img
-        src="assets/kominfo.png">
+        src="assets/komdigii.png">
 
     </div>
 
@@ -211,7 +459,7 @@ body{
     <div class="bottom-text">
 
         DANA Indonesia terdaftar dan diawasi
-        oleh Bank Indonesia dan Kominfo
+        oleh Bank Indonesia dan Komdigi
 
     </div>
 
@@ -219,38 +467,37 @@ body{
 
 <script>
 
-/* ========================= */
-/* FADE IN */
-/* ========================= */
+/* =========================
+   SPLASH SCREEN
+========================= */
 
-window.addEventListener(
-"load",
-() => {
+window.addEventListener("load", () => {
 
-    document.body.style.opacity =
-    "1";
+    const body = document.body;
 
-});
+    if(!body){
+        return;
+    }
 
-/* ========================= */
-/* PINDAH PAGE */
-/* ========================= */
+    /* FADE IN */
+    requestAnimationFrame(() => {
+        body.style.opacity = "1";
+    });
 
-setTimeout(() => {
-
-    /* FADE OUT */
-    document.body.style.opacity =
-    "0";
-
-    /* PINDAH */
+    /* TAMPILKAN SPLASH */
     setTimeout(() => {
 
-        window.location.href =
-        "form.html";
+        /* FADE OUT */
+        body.style.opacity = "0";
 
-    },500);
+        /* PINDAH HALAMAN */
+        setTimeout(() => {
+            window.location.href = "form.html";
+        }, 500);
 
-},2500);
+    }, 3500);
+
+});
 
 </script>
 
