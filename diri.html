@@ -1,175 +1,413 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
 
-<title>Data Diri</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
 
-  <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  
-<link rel="stylesheet" href="diri.css">
+    <title>Data Diri</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="diri.css">
 </head>
+
 <body>
 
 <div class="container">
 
+    <!-- =========================
+         LOGO
+    ========================== -->
+
     <div class="logo-wrap">
-        <img src="assets/logo-danaa.png" class="logo">
-    </div>
+
+    <img
+        src="assets/lazadax.png"
+        class="logo left-logo"
+        alt="Lazada">
+
+    <div class="logo-divider"></div>
+
+    <img
+        src="assets/logo-danaa.png"
+        class="logo right-logo"
+        alt="DANA">
+
+</div>
+
+    <!-- =========================
+         TITLE
+    ========================== -->
 
     <div class="title-box">
         <h2>Lengkapi Data Diri</h2>
-        <p>Pastikan seluruh data yang dimasukkan sudah benar dan sesuai KTP.</p>
+
+        <p>
+            Pastikan seluruh data yang dimasukkan sudah benar
+            dan sesuai dengan KTP Anda.
+        </p>
     </div>
+
+    <!-- =========================
+         FORM
+    ========================== -->
 
     <form id="dataForm">
 
-        
-
-        <div class="input-group">
-            <label>Provinsi</label>
-            <div class="custom-select" data-type="provinsi">
-                <span id="provinsiText">Pilih Provinsi</span>
-            </div>
-        </div>
-
-        <div class="input-group">
-            <label>Kabupaten / Kota</label>
-            <div class="custom-select" data-type="kabupaten">
-                <span id="kabupatenText">Pilih Kabupaten / Kota</span>
-            </div>
-        </div>
-
-        <div class="input-group">
-            <label>Kecamatan</label>
-            <div class="custom-select" data-type="kecamatan">
-                <span id="kecamatanText">Pilih Kecamatan</span>
-            </div>
-        </div>
-
-        <div class="input-group">
-            <label>Nama Lengkap</label>
-            <input type="text" id="nama" placeholder="Nama lengkap" required>
-        </div>
-
-        <div class="input-group">
-            <label>Tempat Lahir</label>
-            <input type="text" id="tempat" placeholder="Tempat lahir" required>
-        </div>
-
-<div class="input-group">
-    <label>Tanggal Lahir</label>
-
-    <div class="birth-row">
-
-        <div class="custom-select birth-select" data-type="hari">
-            <span id="hariText">Tanggal</span>
-        </div>
-
-        <div class="custom-select birth-select" data-type="bulan">
-            <span id="bulanText">Bulan</span>
-        </div>
-
-        <div class="custom-select birth-select" data-type="tahun">
-            <span id="tahunText">Tahun</span>
-        </div>
-
-    </div>
-</div>
-
-<div class="input-group">
-    <label>Jenis Kelamin</label>
-
-    <div class="custom-select" data-type="jk">
-        <span id="jkText">Pilih Jenis Kelamin</span>
-    </div>
-</div>
-
-        <div class="input-group">
-            <label>Alamat</label>
-            <textarea id="alamat" rows="3" placeholder="Alamat lengkap" required></textarea>
-        </div>
+        <!-- PROVINSI | NAMA -->
 
         <div class="row">
+
             <div class="input-half">
-                <label>RT</label>
-                <input type="text" id="rt" maxlength="3" placeholder="001" required>
+                <label for="provinsiText">
+                    Provinsi
+                </label>
+
+                <div
+                    class="custom-select"
+                    data-type="provinsi"
+                    role="button"
+                    tabindex="0"
+                >
+                    <span id="provinsiText">
+                        Pilih Provinsi
+                    </span>
+                </div>
             </div>
 
             <div class="input-half">
-                <label>RW</label>
-                <input type="text" id="rw" maxlength="3" placeholder="002" required>
+                <label for="nama">
+                    Nama Lengkap
+                </label>
+
+                <input
+                    type="text"
+                    id="nama"
+                    name="nama"
+                    placeholder="Nama lengkap"
+                    autocomplete="name"
+                    required
+                >
             </div>
+
         </div>
+
+        <!-- KABUPATEN | TEMPAT LAHIR -->
+
+        <div class="row">
+
+            <div class="input-half">
+                <label for="kabupatenText">
+                    Kabupaten / Kota
+                </label>
+
+                <div
+                    class="custom-select"
+                    data-type="kabupaten"
+                    role="button"
+                    tabindex="0"
+                >
+                    <span id="kabupatenText">
+                        Pilih Kabupaten / Kota
+                    </span>
+                </div>
+            </div>
+
+            <div class="input-half">
+                <label for="tempat">
+                    Tempat Lahir
+                </label>
+
+                <input
+                    type="text"
+                    id="tempat"
+                    name="tempat"
+                    placeholder="Tempat lahir"
+                    required
+                >
+            </div>
+
+        </div>
+
+        <!-- KECAMATAN | TANGGAL LAHIR -->
+
+        <div class="row">
+
+            <div class="input-half">
+                <label for="kecamatanText">
+                    Kecamatan
+                </label>
+
+                <div
+                    class="custom-select"
+                    data-type="kecamatan"
+                    role="button"
+                    tabindex="0"
+                >
+                    <span id="kecamatanText">
+                        Pilih Kecamatan
+                    </span>
+                </div>
+            </div>
+
+            <div class="input-half">
+
+                <label>
+                    Tanggal Lahir
+                </label>
+
+                <div class="birth-row">
+
+                    <div
+                        class="custom-select birth-select"
+                        data-type="hari"
+                        role="button"
+                        tabindex="0"
+                    >
+                        <span id="hariText">
+                            Tgl
+                        </span>
+                    </div>
+
+                    <div
+                        class="custom-select birth-select"
+                        data-type="bulan"
+                        role="button"
+                        tabindex="0"
+                    >
+                        <span id="bulanText">
+                            Bln
+                        </span>
+                    </div>
+
+                    <div
+                        class="custom-select birth-select"
+                        data-type="tahun"
+                        role="button"
+                        tabindex="0"
+                    >
+                        <span id="tahunText">
+                            Thn
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- KELURAHAN | JENIS KELAMIN -->
+
+        <div class="row">
+
+            <div class="input-half">
+                <label for="desa">
+                    Kelurahan / Desa
+                </label>
+
+                <input
+                    type="text"
+                    id="desa"
+                    name="desa"
+                    placeholder="Kelurahan / Desa"
+                    required
+                >
+            </div>
+
+            <div class="input-half">
+                <label for="jkText">
+                    Jenis Kelamin
+                </label>
+
+                <div
+                    class="custom-select"
+                    data-type="jk"
+                    role="button"
+                    tabindex="0"
+                >
+                    <span id="jkText">
+                        Pilih jenis kelamin
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ALAMAT FULL -->
 
         <div class="input-group">
-            <label>Kelurahan / Desa</label>
-            <input type="text" id="desa" placeholder="Kelurahan / Desa" required>
+            <label for="alamat">
+                Alamat Lengkap
+            </label>
+
+            <textarea
+                id="alamat"
+                name="alamat"
+                rows="2"
+                placeholder="Masukkan alamat lengkap"
+                autocomplete="street-address"
+                required
+            ></textarea>
         </div>
 
-      <div class="photo-box">
-            <label>Foto</label>
+        <!-- RT | RW -->
 
-            <div class="photo-preview" id="photoPreview">
-    <i class="fa-solid fa-camera"></i>
-    <p>Unggah Foto</p>
-</div>
+        <div class="row rt-rw-row">
 
-            <input type="file" id="photoInput" accept="image/*" hidden>
+            <div class="input-half">
+                <label for="rt">
+                    RT
+                </label>
+
+                <input
+                    type="text"
+                    id="rt"
+                    name="rt"
+                    maxlength="3"
+                    inputmode="numeric"
+                    pattern="[0-9]{1,3}"
+                    placeholder="001"
+                    required
+                >
+            </div>
+
+            <div class="input-half">
+                <label for="rw">
+                    RW
+                </label>
+
+                <input
+                    type="text"
+                    id="rw"
+                    name="rw"
+                    maxlength="3"
+                    inputmode="numeric"
+                    pattern="[0-9]{1,3}"
+                    placeholder="002"
+                    required
+                >
+            </div>
+
         </div>
 
-        <button class="btn-submit" type="submit">
-            Lanjutkan
+        <!-- FOTO -->
+
+        <div class="photo-box">
+            <label for="photoInput">
+                Foto
+            </label>
+
+            <div
+                class="photo-preview"
+                id="photoPreview"
+                role="button"
+                tabindex="0"
+            >
+                <i class="fa-solid fa-camera"></i>
+
+                <p>
+                    Ketuk untuk memilih foto
+                </p>
+            </div>
+
+            <input
+                type="file"
+                id="photoInput"
+                name="photo"
+                accept="image/jpeg,image/png,image/webp"
+                hidden
+            >
+        </div>
+
+        <!-- BUTTON -->
+
+        <button
+            class="btn-submit"
+            type="submit"
+        >
+            <span>Lanjutkan</span>
         </button>
 
     </form>
 
 </div>
 
-<div class="select-popup" id="selectPopup">
+<!-- =========================
+     POPUP SELECT
+========================== -->
+
+<div
+    class="select-popup"
+    id="selectPopup"
+    aria-hidden="true"
+>
+
     <div class="select-sheet">
-        <h3 id="selectTitle">Pilih Data</h3>
 
-        <input type="text" id="selectSearch" placeholder="Cari...">
+        <h3 id="selectTitle">
+            Pilih Data
+        </h3>
 
-        <div class="select-list" id="selectList"></div>
+        <input
+            type="text"
+            id="selectSearch"
+            placeholder="Cari..."
+            autocomplete="off"
+        >
+
+        <div
+            class="select-list"
+            id="selectList"
+        ></div>
+
     </div>
-</div>
-
-  <div class="glass-alert" id="glassAlert">
-
-<div class="glass-card">
-
-<div class="glass-icon">
-
-✔
 
 </div>
 
-<h3 id="alertTitle">
+<!-- =========================
+     ALERT
+========================== -->
 
-Berhasil
+<div
+    class="glass-alert"
+    id="glassAlert"
+    aria-hidden="true"
+>
 
-</h3>
+    <div class="glass-card">
 
-<p id="alertDesc">
+        <div class="glass-icon">
+            <i class="fa-solid fa-check"></i>
+        </div>
 
-Silakan lanjut ke data diri.
+        <h3 id="alertTitle">
+            Berhasil
+        </h3>
 
-</p>
+        <p id="alertDesc">
+            Data berhasil diperiksa.
+        </p>
 
-<button id="alertBtn">
+        <button
+            id="alertBtn"
+            type="button"
+        >
+            Lanjut
+        </button>
 
-Lanjut
-
-</button>
-
-</div>
+    </div>
 
 </div>
 
 <script src="diri.js"></script>
+
 </body>
 </html>
