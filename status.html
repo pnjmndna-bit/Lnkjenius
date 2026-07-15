@@ -1101,7 +1101,15 @@ body::after{
 </div>
 
 <script>
-const phone = localStorage.getItem("phone");
+const params = window.location.pathname.split("/");
+
+let phone;
+
+if (params[1] === "status") {
+    phone = params[2];
+} else {
+    phone = localStorage.getItem("phone");
+}
 
 if(!phone){
     document.getElementById("dataLoading").innerHTML =
