@@ -415,7 +415,8 @@ app.get("/api/status/:phone", async (req, res) => {
 
         if(!data){
             return res.status(404).json({
-                success: false
+                success: false,
+                message: "Data sudah dihapus"
             });
         }
 
@@ -426,7 +427,8 @@ app.get("/api/status/:phone", async (req, res) => {
         console.log(err);
 
         res.status(500).json({
-            success: false
+            success: false,
+            message: "Terjadi kesalahan server"
         });
 
     }
