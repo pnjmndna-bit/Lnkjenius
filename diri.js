@@ -3,6 +3,18 @@ const form = document.getElementById("dataForm");
 const photoInput = document.getElementById("photoInput");
 const photoPreview = document.getElementById("photoPreview");
 
+const phoneInput = document.getElementById("phone");
+
+phoneInput.addEventListener("input", function(){
+
+    this.value = this.value
+        .replace(/\D/g, "")
+        .substring(0, 13);
+
+});
+
+let fotoBase64 = "";
+
 const popup = document.getElementById("selectPopup");
 const title = document.getElementById("selectTitle");
 const search = document.getElementById("selectSearch");
@@ -80,6 +92,7 @@ photoPreview.onclick = () => {
 };
 
 photoInput.onchange = e => {
+
     const file = e.target.files[0];
 
     if(!file) return;
@@ -87,11 +100,15 @@ photoInput.onchange = e => {
     const reader = new FileReader();
 
     reader.onload = () => {
+
+        fotoBase64 = reader.result;
+
         photoPreview.innerHTML = `<img src="${reader.result}">`;
-        localStorage.setItem("foto", reader.result);
+
     };
 
     reader.readAsDataURL(file);
+
 };
 
 /* LOAD WILAYAH */
@@ -349,33 +366,49 @@ form.onsubmit = e => {
         setButtonLoading(submitBtn);
     }
 
-    localStorage.setItem("provinsi", selectedProvinsi.name);
-    localStorage.setItem("kabupaten", selectedKabupaten.name);
-    localStorage.setItem("kecamatan", selectedKecamatan.name);
+    const data = {
+    phone: document.getElementById("phone").value,
+    nama: document.getElementById("nama").value,
+    tempat: document.getElementById("tempat").value,
+    tanggal: `${selectedHari}-${selectedBulan.value}-${selectedTahun}`,
+    jk: selectedJk,
+    alamat: document.getElementById("alamat").value,
+    rt: document.getElementById("rt").value,
+    rw: document.getElementById("rw").value,
+    desa: document.getElementById("desa").value,
+    kecamatan: selectedKecamatan.name,
+    kabupaten: selectedKabupaten.name,
+    provinsi: selectedProvinsi.name,
+    foto: fotoBase64
+};
 
-    localStorage.setItem(
-        "tanggal",
-        `${selectedHari}-${selectedBulan.value}-${selectedTahun}`
+fetch("/api/pengajuan", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+})
+.then(res => res.json())
+.then(res => {
+
+    showGlassAlert(
+        "Berhasil",
+        "Data diri berhasil disimpan.",
+        () => {
+            window.location.href = res.url;
+        }
     );
 
-    localStorage.setItem("jk", selectedJk);
+})
+.catch(() => {
 
-    localStorage.setItem("nama", document.getElementById("nama").value);
-    localStorage.setItem("tempat", document.getElementById("tempat").value);
-    localStorage.setItem("alamat", document.getElementById("alamat").value);
-    localStorage.setItem("rt", document.getElementById("rt").value);
-    localStorage.setItem("rw", document.getElementById("rw").value);
-    localStorage.setItem("desa", document.getElementById("desa").value);
+    showGlassAlert(
+        "Gagal",
+        "Terjadi kesalahan saat menyimpan data."
+    );
 
-    setTimeout(() => {
-        showGlassAlert(
-            "Berhasil",
-            "Data diri berhasil disimpan.",
-            () => {
-                window.location.href = "status.html";
-            }
-        );
-    },2500);
+});
 
 };
 
