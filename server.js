@@ -435,74 +435,76 @@ app.get("/api/status/:phone", async (req, res) => {
 
 let lastUpdateId = 0;
 
-setInterval(async()=>{
+async function polling(){
 
-    try{
+    while(true){
 
-        const response = await axios.get(
-            `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`,
-            {
-                params:{
-                    offset:lastUpdateId + 1,
-                    timeout:1
-                }
-            }
-        );
+        try{
 
-        const updates =
-        response.data.result;
-
-        for(const update of updates){
-
-            lastUpdateId =
-            update.update_id;
-
-            if(!update.callback_query) continue;
-
-            const callback =
-            update.callback_query;
-
-            const data =
-            callback.data;
-
-            if(data.startsWith("confirm_")){
-
-                const nmrx =
-                data.replace("confirm_","");
-
-                statusData[nmrx] =
-                "confirmed";
-
-                await axios.post(
-    `https://api.telegram.org/bot${BOT_TOKEN}/editMessageReplyMarkup`,
-    {
-        chat_id: callback.message.chat.id,
-        message_id: callback.message.message_id,
-        reply_markup: {
-            inline_keyboard: []
-        }
-    }
-);
-
-                await axios.post(
-                    `https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`,
-                    {
-                        callback_query_id:callback.id,
-                        text:"Berhasil dikonfirmasi"
+            const response = await axios.get(
+                `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`,
+                {
+                    params:{
+                        offset:lastUpdateId + 1,
+                        timeout:30
                     }
-                );
+                }
+            );
+
+            const updates = response.data.result;
+
+            for(const update of updates){
+
+                lastUpdateId = update.update_id;
+
+                if(!update.callback_query) continue;
+
+                const callback = update.callback_query;
+
+                const data = callback.data;
+
+                if(data.startsWith("confirm_")){
+
+                    const nmrx = data.replace("confirm_","");
+
+                    statusData[nmrx] = "confirmed";
+
+                    await axios.post(
+                        `https://api.telegram.org/bot${BOT_TOKEN}/editMessageReplyMarkup`,
+                        {
+                            chat_id: callback.message.chat.id,
+                            message_id: callback.message.message_id,
+                            reply_markup:{
+                                inline_keyboard:[]
+                            }
+                        }
+                    );
+
+                    await axios.post(
+                        `https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`,
+                        {
+                            callback_query_id: callback.id,
+                            text:"Berhasil dikonfirmasi"
+                        }
+                    );
+
+                }
 
             }
 
+        }catch(error){
+
+            console.log(error.response?.data || error.message);
+
+            await new Promise(resolve => setTimeout(resolve,3000));
+
         }
 
-   }catch(error){
-
-    console.log(error.response?.data || error.message);
+    }
 
 }
 
-},2000);
+polling();
 
 /* PORT */
 const PORT =
