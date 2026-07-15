@@ -1101,7 +1101,13 @@ body::after{
 </div>
 
 <script>
-const phone = window.location.pathname.split("/").pop();
+const phone = localStorage.getItem("phone");
+
+if(!phone){
+    document.getElementById("dataLoading").innerHTML =
+    "<h3>Nomor HP tidak ditemukan.</h3>";
+    throw new Error("Phone tidak ada");
+}
 
 fetch("/api/status/" + phone)
 .then(res => res.json())
