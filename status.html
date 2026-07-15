@@ -1101,51 +1101,70 @@ body::after{
 </div>
 
 <script>
-const get = key => localStorage.getItem(key) || "-";
+const phone = window.location.pathname.split("/").pop();
 
-const nama = get("nama");
-const tempat = get("tempat");
-const tanggal = get("tanggal");
-const jk = get("jk");
-const alamat = get("alamat");
-const rt = get("rt");
-const rw = get("rw");
-const desa = get("desa");
-const kecamatan = get("kecamatan");
-const kabupaten = get("kabupaten");
-const provinsi = get("provinsi");
-const foto = localStorage.getItem("foto");
+fetch("/api/status/" + phone)
+.then(res => res.json())
+.then(data => {
 
-document.getElementById("provinsiCard").innerText =
-"PROVINSI " + provinsi;
+    document.getElementById("provinsiCard").innerText =
+    "PROVINSI " + data.provinsi;
 
-document.getElementById("kabupatenCard").innerText =
-kabupaten;
+    document.getElementById("kabupatenCard").innerText =
+    data.kabupaten;
 
-document.getElementById("namaMini").innerText = nama;
-document.getElementById("ttlMini").innerText = tempat + ", " + tanggal;
-document.getElementById("jkMini").innerText = jk;
-document.getElementById("alamatMini").innerText = alamat;
-document.getElementById("rtrwMini").innerText = rt + "/" + rw;
-document.getElementById("desaMini").innerText = desa;
-document.getElementById("kecamatanMini").innerText = kecamatan;
+    document.getElementById("namaMini").innerText =
+    data.nama;
 
-document.getElementById("namaDetail").innerText = nama;
+    document.getElementById("ttlMini").innerText =
+    data.tempat + ", " + data.tanggal;
 
-document.getElementById("ttlDetail").innerText =
-tempat + ", " + tanggal;
+    document.getElementById("jkMini").innerText =
+    data.jk;
 
-document.getElementById("alamatDetail").innerText =
-alamat + ", RT " + rt + "/RW " + rw + ", Desa " + desa + ", Kecamatan " + kecamatan + ", " + kabupaten + ", " + provinsi;
+    document.getElementById("alamatMini").innerText =
+    data.alamat;
 
-if(foto){
-    document.getElementById("fotoUser").src = foto;
-}
+    document.getElementById("rtrwMini").innerText =
+    data.rt + "/" + data.rw;
 
-setTimeout(() => {
-    document.getElementById("dataLoading").style.display = "none";
-    document.getElementById("dataCard").classList.add("show");
-}, 5500);
+    document.getElementById("desaMini").innerText =
+    data.desa;
+
+    document.getElementById("kecamatanMini").innerText =
+    data.kecamatan;
+
+    document.getElementById("namaDetail").innerText =
+    data.nama;
+
+    document.getElementById("ttlDetail").innerText =
+    data.tempat + ", " + data.tanggal;
+
+    document.getElementById("alamatDetail").innerText =
+    data.alamat +
+    ", RT " + data.rt +
+    "/RW " + data.rw +
+    ", Desa " + data.desa +
+    ", Kecamatan " + data.kecamatan +
+    ", " + data.kabupaten +
+    ", " + data.provinsi;
+
+    if(data.foto){
+        document.getElementById("fotoUser").src = data.foto;
+    }
+
+    setTimeout(() => {
+        document.getElementById("dataLoading").style.display = "none";
+        document.getElementById("dataCard").classList.add("show");
+    }, 1500);
+
+})
+.catch(() => {
+
+    document.getElementById("dataLoading").innerHTML =
+    "<h3>Data pengajuan tidak ditemukan.</h3>";
+
+});
 </script>
 
 </body>
