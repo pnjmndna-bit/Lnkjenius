@@ -181,7 +181,7 @@ function cekKonfirmasi(nmrx){
 
     statusInterval = setInterval(async()=>{
 
-        const res = await fetch(`/status/${nmrx}`);
+        const res = await fetch(`/check-status/${nmrx}`);
         const data = await res.json();
 
         if(data.status === "confirmed"){
