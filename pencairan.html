@@ -1940,9 +1940,9 @@ function rupiah(angka) {
    AMBIL NOMOR DARI URL
 ===================================== */
 
-const path = window.location.pathname.split("/");
+const params = new URLSearchParams(window.location.search);
 
-const phone = path[2];
+const phone = params.get("phone");
 
 if (!phone) {
 
@@ -1951,7 +1951,6 @@ if (!phone) {
     location.href = "/";
 
 }
-
 
 /* =====================================
    TAMPILKAN NOMOR
