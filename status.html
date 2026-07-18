@@ -16,6 +16,9 @@
 <meta name="twitter:description" content="Lihat Status Pengajuan Anda Secara Online.">
 <meta name="twitter:image" content="https://danaa-id.dmpett-dgtall.xyz/assets/preview-status.jpg">
 
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+   
 <style>
 /* =========================
    RESET
@@ -1197,84 +1200,104 @@ fetch("/api/status/" + phone)
     document.getElementById("dataCard").style.display = "none";
 
     document.getElementById("dataLoading").innerHTML = `
-        <div style="
-max-width:420px;
-margin:30px auto;
-padding:35px 28px;
+<div style="
 position:relative;
 overflow:hidden;
 
-border-radius:28px;
+padding:18px 16px;
 
-background:linear-gradient(
-135deg,
-rgba(28,127,255,.38),
-rgba(0,83,180,.28)
+border-radius:20px;
+
+background:
+radial-gradient(
+circle at 50% -10%,
+rgba(255,255,255,.62),
+transparent 45%
+),
+linear-gradient(
+180deg,
+rgba(255,255,255,.68),
+rgba(255,255,255,.32)
 );
 
-backdrop-filter:blur(30px);
--webkit-backdrop-filter:blur(30px);
+backdrop-filter:blur(28px) saturate(180%);
+-webkit-backdrop-filter:blur(28px) saturate(180%);
 
-border:1px solid rgba(255,255,255,.18);
+border:1px solid rgba(255,255,255,.72);
 
 box-shadow:
-0 20px 60px rgba(0,60,180,.45),
-inset 0 1px 0 rgba(255,255,255,.18);
+0 14px 32px rgba(17,142,234,.12),
+inset 0 1px 0 rgba(255,255,255,.92);
 
 text-align:center;
 ">
 
 <div style="
 position:absolute;
-top:-70px;
-right:-70px;
-width:180px;
-height:180px;
+top:-50px;
+right:-45px;
+
+width:130px;
+height:130px;
+
 border-radius:50%;
-background:rgba(255,255,255,.08);
-filter:blur(10px);
+
+background:
+radial-gradient(
+circle,
+rgba(17,142,234,.15),
+transparent 70%
+);
+
+filter:blur(16px);
 "></div>
 
 <div style="
-width:90px;
-height:90px;
+width:58px;
+height:58px;
+
 margin:auto;
 
 display:flex;
 align-items:center;
 justify-content:center;
 
-border-radius:26px;
+border-radius:18px;
 
-background:linear-gradient(
+background:
+radial-gradient(
+circle at 30% 20%,
+rgba(255,255,255,.88),
+transparent 42%
+),
+linear-gradient(
 180deg,
-rgba(255,255,255,.18),
-rgba(255,255,255,.05)
+rgba(255,255,255,.90),
+rgba(255,255,255,.45)
 );
 
-border:1px solid rgba(255,255,255,.15);
+border:1px solid rgba(255,255,255,.95);
 
 box-shadow:
-0 12px 30px rgba(0,0,0,.18),
-inset 0 1px 0 rgba(255,255,255,.25);
+0 10px 24px rgba(17,142,234,.18),
+inset 0 1px 0 rgba(255,255,255,.95);
 
-margin-bottom:24px;
+margin-bottom:12px;
 ">
 
-<i class="fa-solid fa-file-lines"
+<i class="fa-solid fa-circle-info"
 style="
-font-size:42px;
-color:#6fd3ff;
-text-shadow:0 0 18px rgba(111,211,255,.7);
+font-size:24px;
+color:#118EEA;
 "></i>
 
 </div>
 
 <h2 style="
-margin:0;
-font-size:28px;
-font-weight:800;
-color:#eaf7ff;
+font-size:18px;
+font-weight:900;
+color:#061629;
+margin-bottom:8px;
 ">
 
 Data Tidak Tersedia
@@ -1282,10 +1305,9 @@ Data Tidak Tersedia
 </h2>
 
 <p style="
-margin-top:16px;
-font-size:15px;
-line-height:1.8;
-color:rgba(234,247,255,.82);
+font-size:12px;
+line-height:1.6;
+color:#5f7388;
 ">
 
 Data pengajuan ini tidak tersedia
@@ -1294,7 +1316,7 @@ atau telah dihapus dari sistem.
 </p>
 
 </div>
-    `;
+`;
 
 });
 </script>
