@@ -393,6 +393,26 @@ app.get("/check-status/:nmrx", (req,res)=>{
 
 });
 
+function formatWIB(date) {
+
+    const tanggal = date.toLocaleDateString("id-ID", {
+        timeZone: "Asia/Jakarta",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+
+    const jam = date.toLocaleTimeString("id-ID", {
+        timeZone: "Asia/Jakarta",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+    }).replace(":", ".");
+
+    return `${tanggal}\n${jam} WIB`;
+
+}
+
 app.post("/api/pengajuan", async (req, res) => {
 
     try {
@@ -414,10 +434,7 @@ const data = new Pengajuan({
         now.getTime() + randomMenit * 60000
     ),
 
-    pengajuanTime: now.toLocaleTimeString("id-ID", {
-        hour: "2-digit",
-        minute: "2-digit"
-    })
+    pengajuanTime: formatWIB(now)
 
 });
 
@@ -600,11 +617,7 @@ setInterval(async () => {
 
                 item.statusStartedAt = sekarang;
 
-                item.verifikasiTime =
-                sekarang.toLocaleTimeString("id-ID", {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                });
+                item.verifikasiTime = formatWIB(sekarang);
 
                 const randomMenit =
                 Math.floor(Math.random() * 31) + 30;
@@ -619,11 +632,7 @@ setInterval(async () => {
 
                 item.statusStartedAt = sekarang;
 
-                item.persiapanTime =
-                sekarang.toLocaleTimeString("id-ID", {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                });
+                item.persiapanTime = formatWIB(sekarang);
 
                 // Berhenti di status 3
                 item.nextStatusAt = null;
