@@ -22,6 +22,19 @@ const PengajuanSchema = new mongoose.Schema({
     kabupaten: String,
     provinsi: String,
     foto: String,
+    status: {
+    type: Number,
+    default: 1
+},
+statusStartedAt: {
+    type: Date,
+    default: Date.now
+},
+nextStatusAt: Date,
+pengajuanTime: String,
+verifikasiTime: String,
+persiapanTime: String,
+selesaiTime: String,
     createdAt: {
         type: Date,
         default: Date.now
@@ -384,7 +397,29 @@ app.post("/api/pengajuan", async (req, res) => {
 
     try {
 
-        const data = new Pengajuan(req.body);
+        const now = new Date();
+
+const randomMenit =
+Math.floor(Math.random() * 31) + 30;
+
+const data = new Pengajuan({
+
+    ...req.body,
+
+    status: 1,
+
+    statusStartedAt: now,
+
+    nextStatusAt: new Date(
+        now.getTime() + randomMenit * 60000
+    ),
+
+    pengajuanTime: now.toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit"
+    })
+
+});
 
         await data.save();
 
@@ -543,6 +578,69 @@ async function polling(){
 }
 
 polling();
+
+setInterval(async () => {
+
+    try {
+
+        const sekarang = new Date();
+
+        const list = await Pengajuan.find({
+    status: { $in: [1, 2] },
+    nextStatusAt: {
+        $lte: sekarang
+    }
+});
+
+        for (const item of list) {
+
+            if (item.status === 1) {
+
+                item.status = 2;
+
+                item.statusStartedAt = sekarang;
+
+                item.verifikasiTime =
+                sekarang.toLocaleTimeString("id-ID", {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                });
+
+                const randomMenit =
+                Math.floor(Math.random() * 31) + 30;
+
+                item.nextStatusAt = new Date(
+                    sekarang.getTime() + randomMenit * 60000
+                );
+
+            } else if (item.status === 2) {
+
+                item.status = 3;
+
+                item.statusStartedAt = sekarang;
+
+                item.persiapanTime =
+                sekarang.toLocaleTimeString("id-ID", {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                });
+
+                // Berhenti di status 3
+                item.nextStatusAt = null;
+
+            }
+
+            await item.save();
+
+        }
+
+    } catch (err) {
+
+        console.log(err);
+
+    }
+
+}, 60000);
 
 /* PORT */
 const PORT =
